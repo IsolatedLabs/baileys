@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baileys - WhatsApp Web API</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #333; line-height: 1.6; }
+        header { background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; padding: 3rem 1rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.2rem; opacity: 0.9; }
+        .container { max-width: 960px; margin: 0 auto; padding: 2rem 1rem; }
+        section { margin-bottom: 2.5rem; }
+        h2 { color: #128C7E; border-bottom: 2px solid #25D366; padding-bottom: 0.3rem; margin-bottom: 1rem; }
+        h3 { color: #1a1a1a; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+        pre { background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; padding: 1rem; overflow-x: auto; font-size: 0.9rem; margin-bottom: 1rem; }
+        code { font-family: 'Fira Code', 'Courier New', monospace; }
+        ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.3rem; }
+        a { color: #128C7E; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .feature-card { background: #f9f9f9; border: 1px solid #eee; border-radius: 8px; padding: 1.5rem; }
+        .feature-card h3 { margin-top: 0; color: #128C7E; }
+        footer { text-align: center; padding: 2rem; color: #666; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Baileys</h1>
+        <p>WhatsApp Web API — Multi-device WhatsApp automation library</p>
+        <p style="margin-top:1rem;">
+            <a href="https://github.com/Manuel5906/baileys" style="color:#fff;text-decoration:underline;">GitHub</a>
+            &nbsp;|&nbsp;
+            <a href="https://github.com/Manuel5906/baileys/releases" style="color:#fff;text-decoration:underline;">Releases</a>
+        </p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>Installation</h2>
+            <pre><code>npm install github:Manuel5906/baileys</code></pre>
+        </section>
+
+        <section>
+            <h2>Quick Start</h2>
+            <pre><code>const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('baileys');
+
+async function start() {
+    const { state, saveCreds } = await useMultiFileAuthState('auth_info');
+    const sock = makeWASocket({
+        auth: state,
+        printQRInTerminal: true,
+    });
+
+    sock.ev.on('messages.upsert', async ({ messages }) => {
+        const m = messages[0];
+        if (!m.key.fromMe) {
+            await sock.sendMessage(m.key.remoteJid, {
+                text: 'Hello from Baileys!'
+            }, { quoted: m });
+        }
+    });
+
+    sock.ev.on('connection.update', ({ connection, lastDisconnect }) => {
+        if (connection === 'close') {
+            start();
+        }
+    });
+}
+
+start();</code></pre>
+        </section>
+
+        <section>
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Multi-Device</h3>
+                    <p>Full WhatsApp multi-device support via WebSocket.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Interactive Messages</h3>
+                    <p>Buttons, lists, native flow, copy-to-clipboard, and URL buttons.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Media Support</h3>
+                    <p>Images, videos, documents, audio messages with thumbnails.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Groups & Chats</h3>
+                    <p>Manage groups, polls, events, albums, and stories.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Session Management</h3>
+                    <p>Multi-file auth state, in-memory store, cache manager support.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Stable Pairing</h3>
+                    <p>Robust reconnection with customizable pairing code.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Message Types</h2>
+
+            <h3>Simple Text</h3>
+            <pre><code>await sock.sendMessage(jid, { text: 'Hello!' });</code></pre>
+
+            <h3>Interactive Buttons</h3>
+            <pre><code>await sock.sendMessage(jid, {
+    interactiveMessage: {
+        header: 'Title',
+        title: 'Body text',
+        footer: 'Footer',
+        buttons: [{
+            name: 'cta_copy',
+            buttonParamsJson: JSON.stringify({
+                display_text: 'Copy',
+                copy_code: 'ABC123'
+            })
+        }]
+    }
+});</code></pre>
+
+            <h3>Image with Buttons</h3>
+            <pre><code>await sock.sendMessage(jid, {
+    interactiveMessage: {
+        header: 'Check this',
+        title: 'Nice image',
+        image: { url: 'https://example.com/image.jpg' },
+        buttons: [{
+            name: 'cta_url',
+            buttonParamsJson: JSON.stringify({
+                display_text: 'Visit',
+                url: 'https://example.com'
+            })
+        }]
+    }
+});</code></pre>
+
+            <h3>Product Message</h3>
+            <pre><code>await sock.sendMessage(jid, {
+    productMessage: {
+        title: 'Sample Product',
+        description: 'Product description',
+        thumbnail: { url: 'https://example.com/image.jpg' },
+        productId: 'PROD001',
+        retailerId: 'RETAIL001',
+        priceAmount1000: 50000,
+        currencyCode: 'USD',
+        buttons: [{
+            name: 'cta_url',
+            buttonParamsJson: JSON.stringify({
+                display_text: 'Buy Now',
+                url: 'https://example.com/buy'
+            })
+        }]
+    }
+});</code></pre>
+        </section>
+
+        <section>
+            <h2>API Overview</h2>
+            <ul>
+                <li><code>makeWASocket(config)</code> — Create a WhatsApp connection</li>
+                <li><code>sendMessage(jid, content, options)</code> — Send any message type</li>
+                <li><code>useMultiFileAuthState(folder)</code> — Persistent auth state</li>
+                <li><code>generateWAMessageFromContent(jid, content, options)</code> — Generate messages</li>
+                <li><code>prepareWAMessageMedia(message, options)</code> — Prepare media uploads</li>
+                <li><code>makeInMemoryStore()</code> — In-memory message store</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Button Types</h2>
+            <ul>
+                <li><code>cta_copy</code> — Copy to clipboard button</li>
+                <li><code>cta_url</code> — Open URL button</li>
+                <li><code>single_select</code> — Single-select list menu</li>
+                <li><code>call_permission_request</code> — Request call permission</li>
+                <li><code>review_and_pay</code> — Review and pay</li>
+                <li><code>review_order</code> — Review order</li>
+                <li><code>payment_info</code> — Payment info</li>
+                <li><code>payment_status</code> — Payment status</li>
+                <li><code>payment_method</code> — Payment method</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p><a href="https://github.com/Manuel5906/baileys">Baileys on GitHub</a> &mdash; MIT License</p>
+    </footer>
+</body>
+</html>
