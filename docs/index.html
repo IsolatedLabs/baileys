@@ -3,195 +3,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baileys - WhatsApp Web API</title>
+    <title>Baileys — WhatsApp Web API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0b0e14;
+            --surface: #131820;
+            --surface2: #1a2230;
+            --border: #252d3d;
+            --text: #e2e8f0;
+            --text2: #8899b4;
+            --accent: #25D366;
+            --accent2: #128C7E;
+            --accent-dim: rgba(37, 211, 102, 0.08);
+            --code-bg: #0d1117;
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0,0,0,.3);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #333; line-height: 1.6; }
-        header { background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; padding: 3rem 1rem; text-align: center; }
-        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        header p { font-size: 1.2rem; opacity: 0.9; }
-        .container { max-width: 960px; margin: 0 auto; padding: 2rem 1rem; }
-        section { margin-bottom: 2.5rem; }
-        h2 { color: #128C7E; border-bottom: 2px solid #25D366; padding-bottom: 0.3rem; margin-bottom: 1rem; }
-        h3 { color: #1a1a1a; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        pre { background: #f5f5f5; border: 1px solid #ddd; border-radius: 6px; padding: 1rem; overflow-x: auto; font-size: 0.9rem; margin-bottom: 1rem; }
-        code { font-family: 'Fira Code', 'Courier New', monospace; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(160deg, #0b1a15 0%, #0b0e14 50%, #0f141f 100%);
+            padding: 5rem 1.5rem 4rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 80%, rgba(37,211,102,.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #25D366, #6ee7a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text2);
+            max-width: 540px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+        .hero-links { display: flex; gap: 1rem; justify-content: center; position: relative; flex-wrap: wrap; }
+        .hero-links a {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            font-size: 0.9rem; font-weight: 500;
+            text-decoration: none;
+            transition: all .2s;
+        }
+        .hero-links .btn-primary {
+            background: var(--accent); color: #0b0e14;
+        }
+        .hero-links .btn-primary:hover { background: #2ee67a; transform: translateY(-1px); }
+        .hero-links .btn-secondary {
+            background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+        }
+        .hero-links .btn-secondary:hover { background: #1e2a3c; }
+
+        /* Container */
+        .container { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+        /* Sections */
+        section { margin-bottom: 3rem; }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        h2::before {
+            content: '';
+            display: block;
+            width: 3px; height: 1.5rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-top: 1.75rem;
+            margin-bottom: 0.6rem;
+            color: var(--accent);
+        }
+
+        /* Code blocks */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        pre .comment { color: #5c6a7e; }
+        pre .keyword { color: #c792ea; }
+        pre .string { color: #c3e88d; }
+        pre .func { color: #82aaff; }
+        pre .const { color: #f78c6c; }
+        pre .num { color: #f78c6c; }
+        code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+        p code, li code {
+            background: var(--surface2);
+            padding: 0.15em 0.5em;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #6ee7a0;
+        }
+
+        /* Feature grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all .25s;
+        }
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .feature-card .icon {
+            display: flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: var(--accent-dim);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .feature-card h3 {
+            margin: 0 0 0.4rem;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        .feature-card p {
+            font-size: 0.88rem;
+            color: var(--text2);
+            line-height: 1.5;
+        }
+
+        /* Lists */
         ul { padding-left: 1.5rem; margin-bottom: 1rem; }
-        li { margin-bottom: 0.3rem; }
-        a { color: #128C7E; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-        .feature-card { background: #f9f9f9; border: 1px solid #eee; border-radius: 8px; padding: 1.5rem; }
-        .feature-card h3 { margin-top: 0; color: #128C7E; }
-        footer { text-align: center; padding: 2rem; color: #666; font-size: 0.9rem; }
+        li { margin-bottom: 0.4rem; color: var(--text2); }
+        li strong { color: var(--text); }
+
+        /* Install */
+        .install-block {
+            display: flex; gap: 0.5rem; align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+        }
+        .install-block code {
+            flex: 1;
+            background: transparent;
+            padding: 0;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .copy-btn {
+            background: var(--accent-dim);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all .2s;
+        }
+        .copy-btn:hover { background: var(--accent); color: #0b0e14; }
+
+        /* API table */
+        .api-table { width: 100%; border-collapse: collapse; }
+        .api-table tr { border-bottom: 1px solid var(--border); }
+        .api-table td { padding: 0.75rem 0.5rem; vertical-align: top; }
+        .api-table td:first-child {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: #6ee7a0;
+            white-space: nowrap;
+            width: 40%;
+        }
+        .api-table td:last-child { color: var(--text2); font-size: 0.9rem; }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            background: var(--accent-dim);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border); }
+        .tab {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text2);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all .2s;
+            user-select: none;
+        }
+        .tab:hover { color: var(--text); }
+        .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-content pre { border-top-left-radius: 0; margin-top: 0; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text2);
+            font-size: 0.85rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* Utils */
+        .mt-0 { margin-top: 0 !important; }
+        .mb-0 { margin-bottom: 0 !important; }
+        .flex { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero { padding: 3rem 1rem 2.5rem; }
+            .api-table td:first-child { white-space: normal; width: auto; }
+            .api-table, .api-table tbody, .api-table tr, .api-table td { display: block; }
+            .api-table td { padding: 0.4rem 0; }
+            .api-table tr { padding: 0.6rem 0; }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Baileys</h1>
-        <p>WhatsApp Web API — Multi-device WhatsApp automation library</p>
-        <p style="margin-top:1rem;">
-            <a href="https://github.com/Manuel5906/baileys" style="color:#fff;text-decoration:underline;">GitHub</a>
-            &nbsp;|&nbsp;
-            <a href="https://github.com/Manuel5906/baileys/releases" style="color:#fff;text-decoration:underline;">Releases</a>
-        </p>
-    </header>
 
-    <div class="container">
-        <section>
-            <h2>Installation</h2>
-            <pre><code>npm install github:Manuel5906/baileys</code></pre>
-        </section>
+<header class="hero">
+    <h1>Baileys</h1>
+    <p>Open-source WhatsApp Web API for building automations, bots, and integrations using modern WebSocket technology.</p>
+    <div class="hero-links">
+        <a href="https://github.com/Manuel5906/baileys" class="btn-primary">GitHub</a>
+        <a href="https://github.com/Manuel5906/baileys/releases" class="btn-secondary">Releases</a>
+        <a href="#docs" class="btn-secondary">Docs</a>
+    </div>
+</header>
 
-        <section>
-            <h2>Quick Start</h2>
-            <pre><code>const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('baileys');
+<div class="container" id="docs">
 
-async function start() {
-    const { state, saveCreds } = await useMultiFileAuthState('auth_info');
-    const sock = makeWASocket({
+    <!-- Install -->
+    <section>
+        <h2>Installation</h2>
+        <div class="install-block">
+            <code>npm install github:Manuel5906/baileys</code>
+            <button class="copy-btn" onclick="copy(this)">Copy</button>
+        </div>
+        <p style="margin-top:0.75rem;color:var(--text2);font-size:0.9rem;">Node.js 20+ required.</p>
+    </section>
+
+    <!-- Quick Start -->
+    <section>
+        <h2>Quick Start</h2>
+        <div class="tabs" id="qs-tabs">
+            <div class="tab active" onclick="switchTab('qs-tabs','qs-js')">JavaScript</div>
+            <div class="tab" onclick="switchTab('qs-tabs','qs-ts')">TypeScript</div>
+        </div>
+        <div id="qs-js" class="tab-content active">
+<pre><code><span class="keyword">const</span> { <span class="func">default</span>: makeWASocket, useMultiFileAuthState, DisconnectReason } = <span class="func">require</span>(<span class="string">'baileys'</span>);
+
+<span class="keyword">async function</span> <span class="func">start</span>() {
+    <span class="keyword">const</span> { state, saveCreds } = <span class="keyword">await</span> <span class="func">useMultiFileAuthState</span>(<span class="string">'auth_info'</span>);
+    <span class="keyword">const</span> sock = <span class="func">makeWASocket</span>({
         auth: state,
-        printQRInTerminal: true,
+        printQRInTerminal: <span class="const">true</span>,
     });
 
-    sock.ev.on('messages.upsert', async ({ messages }) => {
-        const m = messages[0];
-        if (!m.key.fromMe) {
-            await sock.sendMessage(m.key.remoteJid, {
-                text: 'Hello from Baileys!'
+    sock.ev.<span class="func">on</span>(<span class="string">'messages.upsert'</span>, <span class="keyword">async</span> ({ messages }) => {
+        <span class="keyword">const</span> m = messages[<span class="num">0</span>];
+        <span class="keyword">if</span> (!m.key.fromMe) {
+            <span class="keyword">await</span> sock.<span class="func">sendMessage</span>(m.key.remoteJid, {
+                text: <span class="string">'Hello from Baileys!'</span>
             }, { quoted: m });
         }
     });
 
-    sock.ev.on('connection.update', ({ connection, lastDisconnect }) => {
-        if (connection === 'close') {
-            start();
-        }
+    sock.ev.<span class="func">on</span>(<span class="string">'connection.update'</span>, ({ connection, lastDisconnect }) => {
+        <span class="keyword">if</span> (connection === <span class="string">'close'</span>) <span class="func">start</span>();
     });
 }
 
-start();</code></pre>
-        </section>
+<span class="func">start</span>();</code></pre>
+        </div>
+        <div id="qs-ts" class="tab-content">
+<pre><code><span class="keyword">import</span> makeWASocket, { useMultiFileAuthState, DisconnectReason } <span class="keyword">from</span> <span class="string">'baileys'</span>;
 
-        <section>
-            <h2>Features</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>Multi-Device</h3>
-                    <p>Full WhatsApp multi-device support via WebSocket.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Interactive Messages</h3>
-                    <p>Buttons, lists, native flow, copy-to-clipboard, and URL buttons.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Media Support</h3>
-                    <p>Images, videos, documents, audio messages with thumbnails.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Groups & Chats</h3>
-                    <p>Manage groups, polls, events, albums, and stories.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Session Management</h3>
-                    <p>Multi-file auth state, in-memory store, cache manager support.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Stable Pairing</h3>
-                    <p>Robust reconnection with customizable pairing code.</p>
-                </div>
+<span class="keyword">async function</span> <span class="func">start</span>() {
+    <span class="keyword">const</span> { state, saveCreds } = <span class="keyword">await</span> <span class="func">useMultiFileAuthState</span>(<span class="string">'auth_info'</span>);
+    <span class="keyword">const</span> sock = <span class="func">makeWASocket</span>({
+        auth: state,
+        printQRInTerminal: <span class="const">true</span>,
+    });
+
+    sock.ev.<span class="func">on</span>(<span class="string">'messages.upsert'</span>, <span class="keyword">async</span> ({ messages }) => {
+        <span class="keyword">const</span> m = messages[<span class="num">0</span>];
+        <span class="keyword">if</span> (!m.key.fromMe) {
+            <span class="keyword">await</span> sock.<span class="func">sendMessage</span>(m.key.remoteJid, {
+                text: <span class="string">'Hello from Baileys!'</span>
+            }, { quoted: m });
+        }
+    });
+
+    sock.ev.<span class="func">on</span>(<span class="string">'connection.update'</span>, ({ connection }) => {
+        <span class="keyword">if</span> (connection === <span class="string">'close'</span>) <span class="func">start</span>();
+    });
+}
+
+<span class="func">start</span>();</code></pre>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section>
+        <h2>Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon">📱</div>
+                <h3>Multi-Device</h3>
+                <p>Full WhatsApp multi-device support via WebSocket. No browser required.</p>
             </div>
-        </section>
+            <div class="feature-card">
+                <div class="icon">🎛️</div>
+                <h3>Interactive Messages</h3>
+                <p>Buttons, lists, native flow, copy-to-clipboard, URL buttons, and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🖼️</div>
+                <h3>Media Support</h3>
+                <p>Images, videos, documents, and audio with automatic thumbnail generation.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">👥</div>
+                <h3>Groups & Chats</h3>
+                <p>Manage groups, polls, events, albums, stories, and message history.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔐</div>
+                <h3>Session Management</h3>
+                <p>Persistent auth via multi-file storage, in-memory store, and cache manager.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔗</div>
+                <h3>Stable Pairing</h3>
+                <p>Robust reconnection logic with customizable pairing for reliable connections.</p>
+            </div>
+        </div>
+    </section>
 
-        <section>
-            <h2>Message Types</h2>
+    <!-- Message Types -->
+    <section>
+        <h2>Message Types</h2>
 
-            <h3>Simple Text</h3>
-            <pre><code>await sock.sendMessage(jid, { text: 'Hello!' });</code></pre>
+        <h3>Simple Text</h3>
+<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, { text: <span class="string">'Hello!'</span> });</code></pre>
 
-            <h3>Interactive Buttons</h3>
-            <pre><code>await sock.sendMessage(jid, {
+        <h3>Interactive Buttons</h3>
+<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
     interactiveMessage: {
-        header: 'Title',
-        title: 'Body text',
-        footer: 'Footer',
+        header: <span class="string">'Title'</span>,
+        title: <span class="string">'Body text'</span>,
+        footer: <span class="string">'Footer'</span>,
         buttons: [{
-            name: 'cta_copy',
-            buttonParamsJson: JSON.stringify({
-                display_text: 'Copy',
-                copy_code: 'ABC123'
+            name: <span class="string">'cta_copy'</span>,
+            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
+                display_text: <span class="string">'Copy'</span>,
+                copy_code: <span class="string">'ABC123'</span>
             })
         }]
     }
 });</code></pre>
 
-            <h3>Image with Buttons</h3>
-            <pre><code>await sock.sendMessage(jid, {
+        <h3>Image with Buttons</h3>
+<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
     interactiveMessage: {
-        header: 'Check this',
-        title: 'Nice image',
-        image: { url: 'https://example.com/image.jpg' },
+        header: <span class="string">'Check this'</span>,
+        title: <span class="string">'Nice image'</span>,
+        image: { url: <span class="string">'https://example.com/image.jpg'</span> },
         buttons: [{
-            name: 'cta_url',
-            buttonParamsJson: JSON.stringify({
-                display_text: 'Visit',
-                url: 'https://example.com'
+            name: <span class="string">'cta_url'</span>,
+            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
+                display_text: <span class="string">'Visit'</span>,
+                url: <span class="string">'https://example.com'</span>
             })
         }]
     }
 });</code></pre>
 
-            <h3>Product Message</h3>
-            <pre><code>await sock.sendMessage(jid, {
+        <h3>Product Message</h3>
+<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
     productMessage: {
-        title: 'Sample Product',
-        description: 'Product description',
-        thumbnail: { url: 'https://example.com/image.jpg' },
-        productId: 'PROD001',
-        retailerId: 'RETAIL001',
-        priceAmount1000: 50000,
-        currencyCode: 'USD',
+        title: <span class="string">'Sample Product'</span>,
+        description: <span class="string">'Product description'</span>,
+        thumbnail: { url: <span class="string">'https://example.com/image.jpg'</span> },
+        productId: <span class="string">'PROD001'</span>,
+        retailerId: <span class="string">'RETAIL001'</span>,
+        priceAmount1000: <span class="num">50000</span>,
+        currencyCode: <span class="string">'USD'</span>,
         buttons: [{
-            name: 'cta_url',
-            buttonParamsJson: JSON.stringify({
-                display_text: 'Buy Now',
-                url: 'https://example.com/buy'
+            name: <span class="string">'cta_url'</span>,
+            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
+                display_text: <span class="string">'Buy Now'</span>,
+                url: <span class="string">'https://example.com/buy'</span>
             })
         }]
     }
 });</code></pre>
-        </section>
 
-        <section>
-            <h2>API Overview</h2>
-            <ul>
-                <li><code>makeWASocket(config)</code> — Create a WhatsApp connection</li>
-                <li><code>sendMessage(jid, content, options)</code> — Send any message type</li>
-                <li><code>useMultiFileAuthState(folder)</code> — Persistent auth state</li>
-                <li><code>generateWAMessageFromContent(jid, content, options)</code> — Generate messages</li>
-                <li><code>prepareWAMessageMedia(message, options)</code> — Prepare media uploads</li>
-                <li><code>makeInMemoryStore()</code> — In-memory message store</li>
-            </ul>
-        </section>
+        <h3>Document from Buffer</h3>
+<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
+    interactiveMessage: {
+        header: <span class="string">'Document'</span>,
+        title: <span class="string">'Check this file'</span>,
+        document: fs.<span class="func">readFileSync</span>(<span class="string">'./document.pdf'</span>),
+        mimetype: <span class="string">'application/pdf'</span>,
+        fileName: <span class="string">'document.pdf'</span>,
+        jpegThumbnail: fs.<span class="func">readFileSync</span>(<span class="string">'./thumb.jpeg'</span>),
+        buttons: [{
+            name: <span class="string">'cta_url'</span>,
+            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
+                display_text: <span class="string">'Open'</span>,
+                url: <span class="string">'https://example.com'</span>
+            })
+        }]
+    }
+});</code></pre>
+    </section>
 
-        <section>
-            <h2>Button Types</h2>
-            <ul>
-                <li><code>cta_copy</code> — Copy to clipboard button</li>
-                <li><code>cta_url</code> — Open URL button</li>
-                <li><code>single_select</code> — Single-select list menu</li>
-                <li><code>call_permission_request</code> — Request call permission</li>
-                <li><code>review_and_pay</code> — Review and pay</li>
-                <li><code>review_order</code> — Review order</li>
-                <li><code>payment_info</code> — Payment info</li>
-                <li><code>payment_status</code> — Payment status</li>
-                <li><code>payment_method</code> — Payment method</li>
-            </ul>
-        </section>
-    </div>
+    <!-- API Reference -->
+    <section>
+        <h2>API Reference</h2>
+        <table class="api-table">
+            <tr><td><code>makeWASocket(config)</code></td><td>Create a WhatsApp connection with auth and event handlers</td></tr>
+            <tr><td><code>sendMessage(jid, content, options)</code></td><td>Send any message type (text, image, buttons, etc.)</td></tr>
+            <tr><td><code>useMultiFileAuthState(folder)</code></td><td>Load/save auth credentials to disk</td></tr>
+            <tr><td><code>generateWAMessageFromContent(jid, content, options)</code></td><td>Generate a message object without sending</td></tr>
+            <tr><td><code>prepareWAMessageMedia(message, options)</code></td><td>Upload and prepare media for messages</td></tr>
+            <tr><td><code>makeInMemoryStore()</code></td><td>In-memory message and chat store</td></tr>
+            <tr><td><code>makeCacheableSignalKeyStore(store, logger)</code></td><td>Cached wrapper around auth signal key store</td></tr>
+        </table>
+    </section>
 
-    <footer>
-        <p><a href="https://github.com/Manuel5906/baileys">Baileys on GitHub</a> &mdash; MIT License</p>
-    </footer>
+    <!-- Button Types -->
+    <section>
+        <h2>Button Types</h2>
+        <div class="flex">
+            <span class="badge">cta_copy</span>
+            <span class="badge">cta_url</span>
+            <span class="badge">single_select</span>
+            <span class="badge">call_permission_request</span>
+            <span class="badge">review_and_pay</span>
+            <span class="badge">review_order</span>
+            <span class="badge">payment_info</span>
+            <span class="badge">payment_status</span>
+            <span class="badge">payment_method</span>
+        </div>
+        <p style="margin-top:0.75rem;color:var(--text2);font-size:0.9rem;">
+            All button types work inside <code>interactiveMessage.nativeFlowMessage.buttons[]</code>.
+        </p>
+    </section>
+
+</div>
+
+<footer>
+    <p><a href="https://github.com/Manuel5906/baileys">Baileys</a> &mdash; MIT License</p>
+</footer>
+
+<script>
+function switchTab(tabsId, tabId) {
+    const container = document.getElementById(tabsId).parentElement;
+    container.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelector(`#${tabsId} .tab[onclick*="${tabId}"]`).classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+}
+function copy(btn) {
+    const code = btn.previousElementSibling.textContent;
+    navigator.clipboard.writeText(code.trim());
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+}
+</script>
 </body>
 </html>
