@@ -14,9 +14,9 @@
         "automation",
         "multi-device"
     ],
-    "homepage": "https://www.npmjs.com/package/@darkcore/baileys",
+    "homepage": "https://github.com/Manuel5906/baileys",
     "repository": {
-        "url": "https://www.npmjs.com/package/@darkcore/baileys"
+        "url": "https://github.com/Manuel5906/baileys"
     },
     "license": "MIT",
     "author": "Adhiraj Singh",
