@@ -1,537 +1,619 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baileys — WhatsApp Web API</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0b0e14;
-            --surface: #131820;
-            --surface2: #1a2230;
-            --border: #252d3d;
-            --text: #e2e8f0;
-            --text2: #8899b4;
-            --accent: #25D366;
-            --accent2: #128C7E;
-            --accent-dim: rgba(37, 211, 102, 0.08);
-            --code-bg: #0d1117;
-            --radius: 12px;
-            --shadow: 0 4px 24px rgba(0,0,0,.3);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
+<title>Baileys — WhatsApp Web API</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,::after,::before{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0d14;
+  --surface:#11161f;
+  --surface2:#182130;
+  --border:#1e293b;
+  --text:#e2e8f0;
+  --text2:#7a8ba8;
+  --accent:#25D366;
+  --accent2:#128C7E;
+  --accent-dim:rgba(37,211,102,.08);
+  --code-bg:#0a0d12;
+  --radius:10px;
+  --nav-w:240px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
 
-        /* Header */
-        .hero {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(160deg, #0b1a15 0%, #0b0e14 50%, #0f141f 100%);
-            padding: 5rem 1.5rem 4rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle at 50% 80%, rgba(37,211,102,.04) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #25D366, #6ee7a0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.75rem;
-            position: relative;
-        }
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text2);
-            max-width: 540px;
-            margin: 0 auto 1.5rem;
-            position: relative;
-        }
-        .hero-links { display: flex; gap: 1rem; justify-content: center; position: relative; flex-wrap: wrap; }
-        .hero-links a {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.6rem 1.4rem;
-            border-radius: 8px;
-            font-size: 0.9rem; font-weight: 500;
-            text-decoration: none;
-            transition: all .2s;
-        }
-        .hero-links .btn-primary {
-            background: var(--accent); color: #0b0e14;
-        }
-        .hero-links .btn-primary:hover { background: #2ee67a; transform: translateY(-1px); }
-        .hero-links .btn-secondary {
-            background: var(--surface2); color: var(--text); border: 1px solid var(--border);
-        }
-        .hero-links .btn-secondary:hover { background: #1e2a3c; }
+/* ── Nav ── */
+nav{
+  position:fixed;top:0;left:0;bottom:0;width:var(--nav-w);
+  background:var(--surface);border-right:1px solid var(--border);
+  padding:1.5rem 1rem;overflow-y:auto;z-index:100;
+  display:flex;flex-direction:column;
+}
+nav .brand{
+  font-size:1.2rem;font-weight:800;
+  background:linear-gradient(135deg,#25D366,#6ee7a0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1.5rem;display:block;
+  letter-spacing:-.5px;
+}
+nav a{display:block;padding:.45rem .75rem;border-radius:6px;color:var(--text2);text-decoration:none;font-size:.88rem;transition:all .15s;}
+nav a:hover{background:var(--surface2);color:var(--text);}
+nav a.section{font-weight:600;color:var(--text);margin-top:.75rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;}
+nav a.section:hover{background:transparent;color:var(--accent);}
+nav .spacer{flex:1}
+nav .bottom-link{font-size:.8rem;border-top:1px solid var(--border);padding-top:.75rem;margin-top:.75rem;}
 
-        /* Container */
-        .container { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+/* ── Menu toggle ── */
+.menu-toggle{display:none;position:fixed;top:.75rem;right:.75rem;z-index:200;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  width:42px;height:42px;border-radius:10px;cursor:pointer;align-items:center;justify-content:center;
+  font-size:1.3rem;transition:all .2s;
+}
+.menu-toggle:hover{background:var(--accent-dim);}
+.menu-toggle svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 
-        /* Sections */
-        section { margin-bottom: 3rem; }
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            display: flex; align-items: center; gap: 0.75rem;
-        }
-        h2::before {
-            content: '';
-            display: block;
-            width: 3px; height: 1.5rem;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-        h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-top: 1.75rem;
-            margin-bottom: 0.6rem;
-            color: var(--accent);
-        }
+/* ── Main ── */
+.main{margin-left:var(--nav-w);}
 
-        /* Code blocks */
-        pre {
-            background: var(--code-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            overflow-x: auto;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.82rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-        pre .comment { color: #5c6a7e; }
-        pre .keyword { color: #c792ea; }
-        pre .string { color: #c3e88d; }
-        pre .func { color: #82aaff; }
-        pre .const { color: #f78c6c; }
-        pre .num { color: #f78c6c; }
-        code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
-        p code, li code {
-            background: var(--surface2);
-            padding: 0.15em 0.5em;
-            border-radius: 4px;
-            font-size: 0.85em;
-            color: #6ee7a0;
-        }
+/* ── Hero ── */
+.hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,#0a1814 0%,#0a0d14 50%,#0e131f 100%);
+  padding:4rem 2rem 3rem;text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.hero::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle at 50% 80%,rgba(37,211,102,.04) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero h1{
+  font-size:3.2rem;font-weight:800;letter-spacing:-1.5px;
+  background:linear-gradient(135deg,#25D366,#6ee7a0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:.5rem;position:relative;
+}
+.hero p{font-size:1.1rem;color:var(--text2);max-width:520px;margin:0 auto 1.5rem;position:relative;}
+.hero-links{display:flex;gap:.75rem;justify-content:center;position:relative;flex-wrap:wrap;}
+.hero-links a{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.55rem 1.3rem;border-radius:8px;
+  font-size:.88rem;font-weight:500;text-decoration:none;transition:all .2s;
+}
+.hero-links .primary{background:var(--accent);color:#0a0d14;}
+.hero-links .primary:hover{background:#2ee67a;transform:translateY(-1px);}
+.hero-links .secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.hero-links .secondary:hover{background:#1e2a3c;}
 
-        /* Feature grid */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-        }
-        .feature-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            transition: all .25s;
-        }
-        .feature-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-        .feature-card .icon {
-            display: flex; align-items: center; justify-content: center;
-            width: 40px; height: 40px;
-            border-radius: 10px;
-            background: var(--accent-dim);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-        .feature-card h3 {
-            margin: 0 0 0.4rem;
-            font-size: 1rem;
-            color: var(--text);
-        }
-        .feature-card p {
-            font-size: 0.88rem;
-            color: var(--text2);
-            line-height: 1.5;
-        }
+/* ── Container ── */
+.container{max-width:840px;margin:0 auto;padding:2rem 2rem 3rem;}
 
-        /* Lists */
-        ul { padding-left: 1.5rem; margin-bottom: 1rem; }
-        li { margin-bottom: 0.4rem; color: var(--text2); }
-        li strong { color: var(--text); }
+/* ── Sections ── */
+section{margin-bottom:2.5rem;}
+h2{
+  font-size:1.4rem;font-weight:700;margin-bottom:1rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+h2::before{content:'';display:block;width:3px;height:1.4rem;background:var(--accent);border-radius:2px;}
+h3{
+  font-size:1rem;font-weight:600;margin-top:1.5rem;margin-bottom:.5rem;
+  color:var(--accent);
+}
 
-        /* Install */
-        .install-block {
-            display: flex; gap: 0.5rem; align-items: center;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1rem 1.25rem;
-        }
-        .install-block code {
-            flex: 1;
-            background: transparent;
-            padding: 0;
-            font-size: 0.9rem;
-            color: var(--text);
-        }
-        .copy-btn {
-            background: var(--accent-dim);
-            border: 1px solid var(--border);
-            color: var(--accent);
-            padding: 0.4rem 0.9rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-family: inherit;
-            font-weight: 500;
-            transition: all .2s;
-        }
-        .copy-btn:hover { background: var(--accent); color: #0b0e14; }
+/* ── Install ── */
+.install-block{
+  display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:.85rem 1.1rem;
+}
+.install-block code{flex:1;background:0 0;padding:0;font-size:.9rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.copy-btn{
+  background:var(--accent-dim);border:1px solid var(--border);color:var(--accent);
+  padding:.3rem .75rem;border-radius:6px;cursor:pointer;
+  font-size:.78rem;font-family:inherit;font-weight:500;transition:all .2s;white-space:nowrap;
+}
+.copy-btn:hover{background:var(--accent);color:#0a0d14;}
 
-        /* API table */
-        .api-table { width: 100%; border-collapse: collapse; }
-        .api-table tr { border-bottom: 1px solid var(--border); }
-        .api-table td { padding: 0.75rem 0.5rem; vertical-align: top; }
-        .api-table td:first-child {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.82rem;
-            color: #6ee7a0;
-            white-space: nowrap;
-            width: 40%;
-        }
-        .api-table td:last-child { color: var(--text2); font-size: 0.9rem; }
+/* ── Code ── */
+pre{
+  background:var(--code-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.1rem;overflow-x:auto;
+  font-family:'JetBrains Mono','Fira Code',monospace;
+  font-size:.8rem;line-height:1.6;margin-bottom:1rem;
+  -webkit-overflow-scrolling:touch;
+}
+pre .kc{color:#c792ea}
+pre .s{color:#c3e88d}
+pre .nf{color:#82aaff}
+pre .kc2{color:#f78c6c}
+pre .cm{color:#5c6a7e}
+pre .nt{color:#f78c6c}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;}
+p code,li code{
+  background:var(--surface2);padding:.15em .5em;border-radius:4px;
+  font-size:.85em;color:#6ee7a0;
+}
 
-        /* Badges */
-        .badge {
-            display: inline-block;
-            background: var(--accent-dim);
-            color: var(--accent);
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            margin-right: 0.3rem;
-            margin-bottom: 0.3rem;
-        }
+/* ── Feature grid ── */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;}
+.feature-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.3rem;transition:all .25s;cursor:default;
+}
+.feature-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.feature-card .ico{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--accent-dim);margin-bottom:.75rem;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+}
+.feature-card h3{margin:0 0 .3rem;font-size:.95rem;color:var(--text);}
+.feature-card p{font-size:.84rem;color:var(--text2);line-height:1.5;}
 
-        /* Tabs */
-        .tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border); }
-        .tab {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text2);
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all .2s;
-            user-select: none;
-        }
-        .tab:hover { color: var(--text); }
-        .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .tab-content pre { border-top-left-radius: 0; margin-top: 0; }
+/* ── Lists ── */
+ul{padding-left:1.5rem;margin-bottom:1rem;}
+li{margin-bottom:.35rem;color:var(--text2);}
+li strong{color:var(--text);}
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-            border-top: 1px solid var(--border);
-            color: var(--text2);
-            font-size: 0.85rem;
-        }
-        footer a { color: var(--accent); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
+/* ── Table ── */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl tr{border-bottom:1px solid var(--border);}
+.tbl td{padding:.65rem .5rem;vertical-align:top;font-size:.9rem;}
+.tbl td:first-child{
+  font-family:'JetBrains Mono',monospace;font-size:.8rem;
+  color:#6ee7a0;white-space:nowrap;width:40%;
+}
+.tbl td:last-child{color:var(--text2);}
 
-        /* Utils */
-        .mt-0 { margin-top: 0 !important; }
-        .mb-0 { margin-bottom: 0 !important; }
-        .flex { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+/* ── Badges ── */
+.badges{display:flex;gap:.35rem;flex-wrap:wrap;}
+.badge{
+  background:var(--accent-dim);color:var(--accent);
+  font-size:.73rem;font-weight:500;padding:.2rem .6rem;border-radius:4px;
+  border:1px solid rgba(37,211,102,.15);
+}
 
-        /* Responsive */
-        @media (max-width: 640px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero { padding: 3rem 1rem 2.5rem; }
-            .api-table td:first-child { white-space: normal; width: auto; }
-            .api-table, .api-table tbody, .api-table tr, .api-table td { display: block; }
-            .api-table td { padding: 0.4rem 0; }
-            .api-table tr { padding: 0.6rem 0; }
-        }
-    </style>
+/* ── Tabs ── */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);}
+.tab{
+  padding:.5rem 1rem;font-size:.82rem;font-weight:500;color:var(--text2);
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;user-select:none;
+}
+.tab:hover{color:var(--text);}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+.tc{display:none;}
+.tc.on{display:block;}
+.tc pre{border-top-left-radius:0;margin-top:0;}
+
+/* ── Footer ── */
+footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--text2);font-size:.84rem;}
+footer a{color:var(--accent);text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+
+/* ── Scrollbar ── */
+nav::-webkit-scrollbar{width:4px;}
+nav::-webkit-scrollbar-track{background:transparent;}
+nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* ── Mobile ── */
+@media(max-width:820px){
+  nav{left:-280px;width:260px;transition:left .3s;padding:1rem;z-index:150;}
+  nav.open{left:0;}
+  nav .brand{margin-bottom:1rem;}
+  .menu-toggle{display:flex;}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:140;}
+  .overlay.on{display:block;}
+  .main{margin-left:0;}
+  .hero{padding:3rem 1.25rem 2.5rem;}
+  .hero h1{font-size:2rem;}
+  .container{padding:1.5rem 1.25rem 2rem;}
+  .feature-grid{grid-template-columns:1fr;}
+  .tbl,.tbl tbody,.tbl tr,.tbl td{display:block;}
+  .tbl td{padding:.4rem 0;}
+  .tbl tr{padding:.5rem 0;}
+  .install-block code{white-space:normal;overflow:visible;}
+  pre{font-size:.75rem;padding:.9rem;}
+}
+@media(max-width:480px){
+  .hero h1{font-size:1.7rem;}
+  .hero p{font-size:.95rem;}
+  .hero-links a{padding:.45rem 1rem;font-size:.82rem;}
+  h2{font-size:1.2rem;}
+}
+</style>
 </head>
 <body>
 
+<!-- overlay -->
+<div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+<!-- menu toggle -->
+<button class="menu-toggle" id="menuBtn" onclick="toggleNav()" aria-label="Menu">
+  <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<!-- nav -->
+<nav id="nav">
+  <span class="brand">Baileys</span>
+  <a href="#start" onclick="closeNav()">Quick Start</a>
+  <a href="#features" onclick="closeNav()">Features</a>
+  <a href="#messages" onclick="closeNav()">Message Types</a>
+  <a href="#api" onclick="closeNav()">API Reference</a>
+  <a href="#buttons" onclick="closeNav()">Button Types</a>
+  <a href="#events" onclick="closeNav()">Events</a>
+
+  <span class="section">More</span>
+  <a href="#album" onclick="closeNav()">Album</a>
+  <a href="#event" onclick="closeNav()">Event</a>
+  <a href="#poll" onclick="closeNav()">Poll Result</a>
+  <a href="#payment" onclick="closeNav()">Payment</a>
+  <a href="#product" onclick="closeNav()">Product</a>
+  <a href="#native" onclick="closeNav()">Native Flow</a>
+  <a href="#document" onclick="closeNav()">Document</a>
+
+  <div class="spacer"></div>
+  <a href="https://github.com/Manuel5906/baileys" class="bottom-link">GitHub ↗</a>
+  <a href="https://github.com/Manuel5906/baileys/releases">Releases ↗</a>
+</nav>
+
+<!-- main -->
+<div class="main">
+
 <header class="hero">
-    <h1>Baileys</h1>
-    <p>Open-source WhatsApp Web API for building automations, bots, and integrations using modern WebSocket technology.</p>
-    <div class="hero-links">
-        <a href="https://github.com/Manuel5906/baileys" class="btn-primary">GitHub</a>
-        <a href="https://github.com/Manuel5906/baileys/releases" class="btn-secondary">Releases</a>
-        <a href="#docs" class="btn-secondary">Docs</a>
-    </div>
+  <h1>Baileys</h1>
+  <p>Open-source WhatsApp Web API for building automations, bots, and integrations using modern WebSocket technology.</p>
+  <div class="hero-links">
+    <a href="https://github.com/Manuel5906/baileys" class="primary">GitHub</a>
+    <a href="https://github.com/Manuel5906/baileys/releases" class="secondary">Releases</a>
+    <a href="https://github.com/Manuel5906/baileys/issues" class="secondary">Issues</a>
+  </div>
 </header>
 
-<div class="container" id="docs">
+<div class="container">
 
-    <!-- Install -->
-    <section>
-        <h2>Installation</h2>
-        <div class="install-block">
-            <code>npm install github:Manuel5906/baileys</code>
-            <button class="copy-btn" onclick="copy(this)">Copy</button>
-        </div>
-        <p style="margin-top:0.75rem;color:var(--text2);font-size:0.9rem;">Node.js 20+ required.</p>
-    </section>
+<!-- install -->
+<section id="install">
+  <h2>Installation</h2>
+  <div class="install-block">
+    <code>npm install github:Manuel5906/baileys</code>
+    <button class="copy-btn" onclick="copy(this)">Copy</button>
+  </div>
+  <p style="margin-top:.6rem;color:var(--text2);font-size:.88rem;">Node.js 20+ required.</p>
+</section>
 
-    <!-- Quick Start -->
-    <section>
-        <h2>Quick Start</h2>
-        <div class="tabs" id="qs-tabs">
-            <div class="tab active" onclick="switchTab('qs-tabs','qs-js')">JavaScript</div>
-            <div class="tab" onclick="switchTab('qs-tabs','qs-ts')">TypeScript</div>
-        </div>
-        <div id="qs-js" class="tab-content active">
-<pre><code><span class="keyword">const</span> { <span class="func">default</span>: makeWASocket, useMultiFileAuthState, DisconnectReason } = <span class="func">require</span>(<span class="string">'baileys'</span>);
+<!-- start -->
+<section id="start">
+  <h2>Quick Start</h2>
+  <div class="tabs" id="qs">
+    <div class="tab on" onclick="sw('qs','qj')">JavaScript</div>
+    <div class="tab" onclick="sw('qs','qt')">TypeScript</div>
+  </div>
+  <div id="qj" class="tc on">
+<pre><span class="kc">const</span> { <span class="nf">default</span>: makeWASocket, useMultiFileAuthState, DisconnectReason } = <span class="nf">require</span>(<span class="s">'baileys'</span>);
 
-<span class="keyword">async function</span> <span class="func">start</span>() {
-    <span class="keyword">const</span> { state, saveCreds } = <span class="keyword">await</span> <span class="func">useMultiFileAuthState</span>(<span class="string">'auth_info'</span>);
-    <span class="keyword">const</span> sock = <span class="func">makeWASocket</span>({
+<span class="kc">async function</span> <span class="nf">start</span>() {
+    <span class="kc">const</span> { state, saveCreds } = <span class="kc">await</span> <span class="nf">useMultiFileAuthState</span>(<span class="s">'auth_info'</span>);
+    <span class="kc">const</span> sock = <span class="nf">makeWASocket</span>({
         auth: state,
-        printQRInTerminal: <span class="const">true</span>,
+        printQRInTerminal: <span class="kc2">true</span>,
     });
 
-    sock.ev.<span class="func">on</span>(<span class="string">'messages.upsert'</span>, <span class="keyword">async</span> ({ messages }) => {
-        <span class="keyword">const</span> m = messages[<span class="num">0</span>];
-        <span class="keyword">if</span> (!m.key.fromMe) {
-            <span class="keyword">await</span> sock.<span class="func">sendMessage</span>(m.key.remoteJid, {
-                text: <span class="string">'Hello from Baileys!'</span>
+    sock.ev.<span class="nf">on</span>(<span class="s">'messages.upsert'</span>, <span class="kc">async</span> ({ messages }) => {
+        <span class="kc">const</span> m = messages[<span class="nt">0</span>];
+        <span class="kc">if</span> (!m.key.fromMe) {
+            <span class="kc">await</span> sock.<span class="nf">sendMessage</span>(m.key.remoteJid, {
+                text: <span class="s">'Hello from Baileys!'</span>
             }, { quoted: m });
         }
     });
 
-    sock.ev.<span class="func">on</span>(<span class="string">'connection.update'</span>, ({ connection, lastDisconnect }) => {
-        <span class="keyword">if</span> (connection === <span class="string">'close'</span>) <span class="func">start</span>();
+    sock.ev.<span class="nf">on</span>(<span class="s">'connection.update'</span>, ({ connection }) => {
+        <span class="kc">if</span> (connection === <span class="s">'close'</span>) <span class="nf">start</span>();
     });
 }
 
-<span class="func">start</span>();</code></pre>
-        </div>
-        <div id="qs-ts" class="tab-content">
-<pre><code><span class="keyword">import</span> makeWASocket, { useMultiFileAuthState, DisconnectReason } <span class="keyword">from</span> <span class="string">'baileys'</span>;
+<span class="nf">start</span>();</pre>
+  </div>
+  <div id="qt" class="tc">
+<pre><span class="kc">import</span> makeWASocket, { useMultiFileAuthState, DisconnectReason } <span class="kc">from</span> <span class="s">'baileys'</span>;
 
-<span class="keyword">async function</span> <span class="func">start</span>() {
-    <span class="keyword">const</span> { state, saveCreds } = <span class="keyword">await</span> <span class="func">useMultiFileAuthState</span>(<span class="string">'auth_info'</span>);
-    <span class="keyword">const</span> sock = <span class="func">makeWASocket</span>({
+<span class="kc">async function</span> <span class="nf">start</span>() {
+    <span class="kc">const</span> { state, saveCreds } = <span class="kc">await</span> <span class="nf">useMultiFileAuthState</span>(<span class="s">'auth_info'</span>);
+    <span class="kc">const</span> sock = <span class="nf">makeWASocket</span>({
         auth: state,
-        printQRInTerminal: <span class="const">true</span>,
+        printQRInTerminal: <span class="kc2">true</span>,
     });
 
-    sock.ev.<span class="func">on</span>(<span class="string">'messages.upsert'</span>, <span class="keyword">async</span> ({ messages }) => {
-        <span class="keyword">const</span> m = messages[<span class="num">0</span>];
-        <span class="keyword">if</span> (!m.key.fromMe) {
-            <span class="keyword">await</span> sock.<span class="func">sendMessage</span>(m.key.remoteJid, {
-                text: <span class="string">'Hello from Baileys!'</span>
-            }, { quoted: m });
-        }
-    });
-
-    sock.ev.<span class="func">on</span>(<span class="string">'connection.update'</span>, ({ connection }) => {
-        <span class="keyword">if</span> (connection === <span class="string">'close'</span>) <span class="func">start</span>();
+    sock.ev.<span class="nf">on</span>(<span class="s">'connection.update'</span>, ({ connection }) => {
+        <span class="kc">if</span> (connection === <span class="s">'close'</span>) <span class="nf">start</span>();
     });
 }
 
-<span class="func">start</span>();</code></pre>
-        </div>
-    </section>
+<span class="nf">start</span>();</pre>
+  </div>
+</section>
 
-    <!-- Features -->
-    <section>
-        <h2>Features</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="icon">📱</div>
-                <h3>Multi-Device</h3>
-                <p>Full WhatsApp multi-device support via WebSocket. No browser required.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🎛️</div>
-                <h3>Interactive Messages</h3>
-                <p>Buttons, lists, native flow, copy-to-clipboard, URL buttons, and more.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🖼️</div>
-                <h3>Media Support</h3>
-                <p>Images, videos, documents, and audio with automatic thumbnail generation.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">👥</div>
-                <h3>Groups & Chats</h3>
-                <p>Manage groups, polls, events, albums, stories, and message history.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🔐</div>
-                <h3>Session Management</h3>
-                <p>Persistent auth via multi-file storage, in-memory store, and cache manager.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🔗</div>
-                <h3>Stable Pairing</h3>
-                <p>Robust reconnection logic with customizable pairing for reliable connections.</p>
-            </div>
-        </div>
-    </section>
+<!-- features -->
+<section id="features">
+  <h2>Features</h2>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="ico">📱</div><h3>Multi-Device</h3><p>Full WhatsApp multi-device via WebSocket. No browser needed.</p></div>
+    <div class="feature-card"><div class="ico">🎛️</div><h3>Interactive Messages</h3><p>Buttons, lists, native flow, copy, URL actions and more.</p></div>
+    <div class="feature-card"><div class="ico">🖼️</div><h3>Media Support</h3><p>Images, videos, documents, audio with auto thumbnails.</p></div>
+    <div class="feature-card"><div class="ico">👥</div><h3>Groups & Chats</h3><p>Manage groups, polls, events, albums, stories.</p></div>
+    <div class="feature-card"><div class="ico">🔐</div><h3>Session Management</h3><p>Multi-file auth, in-memory store, cache manager.</p></div>
+    <div class="feature-card"><div class="ico">🔗</div><h3>Stable Pairing</h3><p>Robust reconnection with customizable pairing code.</p></div>
+  </div>
+</section>
 
-    <!-- Message Types -->
-    <section>
-        <h2>Message Types</h2>
+<!-- messages -->
+<section id="messages">
+  <h2>Message Types</h2>
 
-        <h3>Simple Text</h3>
-<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, { text: <span class="string">'Hello!'</span> });</code></pre>
+  <h3>Text</h3>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, { text: <span class="s">'Hello!'</span> });</pre>
 
-        <h3>Interactive Buttons</h3>
-<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
+  <h3>Interactive Buttons</h3>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
     interactiveMessage: {
-        header: <span class="string">'Title'</span>,
-        title: <span class="string">'Body text'</span>,
-        footer: <span class="string">'Footer'</span>,
+        header: <span class="s">'Title'</span>,
+        title: <span class="s">'Body text'</span>,
+        footer: <span class="s">'Footer'</span>,
         buttons: [{
-            name: <span class="string">'cta_copy'</span>,
-            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
-                display_text: <span class="string">'Copy'</span>,
-                copy_code: <span class="string">'ABC123'</span>
+            name: <span class="s">'cta_copy'</span>,
+            buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({
+                display_text: <span class="s">'Copy'</span>,
+                copy_code: <span class="s">'ABC123'</span>
             })
         }]
     }
-});</code></pre>
+});</pre>
 
-        <h3>Image with Buttons</h3>
-<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
+  <h3>Image with Buttons</h3>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
     interactiveMessage: {
-        header: <span class="string">'Check this'</span>,
-        title: <span class="string">'Nice image'</span>,
-        image: { url: <span class="string">'https://example.com/image.jpg'</span> },
+        header: <span class="s">'Check this'</span>,
+        title: <span class="s">'Nice image'</span>,
+        image: { url: <span class="s">'https://example.com/image.jpg'</span> },
         buttons: [{
-            name: <span class="string">'cta_url'</span>,
-            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
-                display_text: <span class="string">'Visit'</span>,
-                url: <span class="string">'https://example.com'</span>
+            name: <span class="s">'cta_url'</span>,
+            buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({
+                display_text: <span class="s">'Visit'</span>,
+                url: <span class="s">'https://example.com'</span>
             })
         }]
     }
-});</code></pre>
+});</pre>
 
-        <h3>Product Message</h3>
-<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
+  <h3>Video with Buttons</h3>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
+    interactiveMessage: {
+        header: <span class="s">'Video'</span>,
+        title: <span class="s">'Watch this'</span>,
+        video: { url: <span class="s">'https://example.com/video.mp4'</span> },
+        buttons: [{
+            name: <span class="s">'cta_url'</span>,
+            buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({
+                display_text: <span class="s">'Watch'</span>,
+                url: <span class="s">'https://example.com'</span>
+            })
+        }]
+    }
+});</pre>
+</section>
+
+<!-- native flow -->
+<section id="native">
+  <h2>Native Flow Message</h2>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
+    interactiveMessage: {
+        header: <span class="s">'Shop'</span>,
+        title: <span class="s">'Browse products'</span>,
+        image: { url: <span class="s">'https://example.com/image.jpg'</span> },
+        nativeFlowMessage: {
+            messageParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({
+                bottom_sheet: {
+                    in_thread_buttons_limit: <span class="nt">2</span>,
+                    list_title: <span class="s">'Options'</span>,
+                    button_title: <span class="s">'Select'</span>
+                }
+            }),
+            buttons: [
+                { name: <span class="s">'single_select'</span>,
+                  buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({ has_multiple_buttons: <span class="kc2">true</span> }) },
+                { name: <span class="s">'cta_copy'</span>,
+                  buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({ display_text: <span class="s">'Copy'</span>, copy_code: <span class="s">'CODE'</span> }) },
+                { name: <span class="s">'cta_url'</span>,
+                  buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({ display_text: <span class="s">'Shop'</span>, url: <span class="s">'https://example.com'</span> }) }
+            ]
+        }
+    }
+});</pre>
+</section>
+
+<!-- product -->
+<section id="product">
+  <h2>Product Catalog</h2>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
     productMessage: {
-        title: <span class="string">'Sample Product'</span>,
-        description: <span class="string">'Product description'</span>,
-        thumbnail: { url: <span class="string">'https://example.com/image.jpg'</span> },
-        productId: <span class="string">'PROD001'</span>,
-        retailerId: <span class="string">'RETAIL001'</span>,
-        priceAmount1000: <span class="num">50000</span>,
-        currencyCode: <span class="string">'USD'</span>,
+        title: <span class="s">'Sample Product'</span>,
+        description: <span class="s">'Product description'</span>,
+        thumbnail: { url: <span class="s">'https://example.com/image.jpg'</span> },
+        productId: <span class="s">'PROD001'</span>,
+        retailerId: <span class="s">'RETAIL001'</span>,
+        priceAmount1000: <span class="nt">50000</span>,
+        currencyCode: <span class="s">'USD'</span>,
         buttons: [{
-            name: <span class="string">'cta_url'</span>,
-            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
-                display_text: <span class="string">'Buy Now'</span>,
-                url: <span class="string">'https://example.com/buy'</span>
+            name: <span class="s">'cta_url'</span>,
+            buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({
+                display_text: <span class="s">'Buy Now'</span>,
+                url: <span class="s">'https://example.com/buy'</span>
             })
         }]
     }
-});</code></pre>
+});</pre>
+</section>
 
-        <h3>Document from Buffer</h3>
-<pre><code><span class="keyword">await</span> sock.<span class="func">sendMessage</span>(jid, {
+<!-- document -->
+<section id="document">
+  <h2>Document from Buffer</h2>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
     interactiveMessage: {
-        header: <span class="string">'Document'</span>,
-        title: <span class="string">'Check this file'</span>,
-        document: fs.<span class="func">readFileSync</span>(<span class="string">'./document.pdf'</span>),
-        mimetype: <span class="string">'application/pdf'</span>,
-        fileName: <span class="string">'document.pdf'</span>,
-        jpegThumbnail: fs.<span class="func">readFileSync</span>(<span class="string">'./thumb.jpeg'</span>),
-        buttons: [{
-            name: <span class="string">'cta_url'</span>,
-            buttonParamsJson: <span class="const">JSON</span>.<span class="func">stringify</span>({
-                display_text: <span class="string">'Open'</span>,
-                url: <span class="string">'https://example.com'</span>
-            })
-        }]
+        header: <span class="s">'Document'</span>,
+        title: <span class="s">'Check this file'</span>,
+        document: fs.<span class="nf">readFileSync</span>(<span class="s">'./document.pdf'</span>),
+        mimetype: <span class="s">'application/pdf'</span>,
+        fileName: <span class="s">'document.pdf'</span>,
+        jpegThumbnail: fs.<span class="nf">readFileSync</span>(<span class="s">'./thumb.jpeg'</span>),
+        buttons: [{ name: <span class="s">'cta_url'</span>,
+            buttonParamsJson: <span class="kc2">JSON</span>.<span class="nf">stringify</span>({ display_text: <span class="s">'Open'</span>, url: <span class="s">'https://example.com'</span> }) }]
     }
-});</code></pre>
-    </section>
+});</pre>
+</section>
 
-    <!-- API Reference -->
-    <section>
-        <h2>API Reference</h2>
-        <table class="api-table">
-            <tr><td><code>makeWASocket(config)</code></td><td>Create a WhatsApp connection with auth and event handlers</td></tr>
-            <tr><td><code>sendMessage(jid, content, options)</code></td><td>Send any message type (text, image, buttons, etc.)</td></tr>
-            <tr><td><code>useMultiFileAuthState(folder)</code></td><td>Load/save auth credentials to disk</td></tr>
-            <tr><td><code>generateWAMessageFromContent(jid, content, options)</code></td><td>Generate a message object without sending</td></tr>
-            <tr><td><code>prepareWAMessageMedia(message, options)</code></td><td>Upload and prepare media for messages</td></tr>
-            <tr><td><code>makeInMemoryStore()</code></td><td>In-memory message and chat store</td></tr>
-            <tr><td><code>makeCacheableSignalKeyStore(store, logger)</code></td><td>Cached wrapper around auth signal key store</td></tr>
-        </table>
-    </section>
+<!-- album -->
+<section id="album">
+  <h2>Album Message</h2>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
+    albumMessage: [
+        { image: { url: <span class="s">'https://example.com/img1.jpg'</span> }, caption: <span class="s">'Photo 1'</span> },
+        { image: { url: <span class="s">'https://example.com/img2.jpg'</span> }, caption: <span class="s">'Photo 2'</span> }
+    ]
+});</pre>
+</section>
 
-    <!-- Button Types -->
-    <section>
-        <h2>Button Types</h2>
-        <div class="flex">
-            <span class="badge">cta_copy</span>
-            <span class="badge">cta_url</span>
-            <span class="badge">single_select</span>
-            <span class="badge">call_permission_request</span>
-            <span class="badge">review_and_pay</span>
-            <span class="badge">review_order</span>
-            <span class="badge">payment_info</span>
-            <span class="badge">payment_status</span>
-            <span class="badge">payment_method</span>
-        </div>
-        <p style="margin-top:0.75rem;color:var(--text2);font-size:0.9rem;">
-            All button types work inside <code>interactiveMessage.nativeFlowMessage.buttons[]</code>.
-        </p>
-    </section>
+<!-- event -->
+<section id="event">
+  <h2>Event Message</h2>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
+    eventMessage: {
+        name: <span class="s">'My Event'</span>,
+        description: <span class="s">'Event description'</span>,
+        location: { name: <span class="s">'Venue'</span>, degreesLatitude: <span class="nt">0</span>, degreesLongitude: <span class="nt">0</span> },
+        startTime: <span class="s">'1763019000'</span>,
+        endTime: <span class="s">'1763026200'</span>,
+        isCanceled: <span class="kc2">false</span>,
+        extraGuestsAllowed: <span class="kc2">true</span>
+    }
+});</pre>
+</section>
 
-</div>
+<!-- poll -->
+<section id="poll">
+  <h2>Poll Result</h2>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
+    pollResultMessage: {
+        name: <span class="s">'Question?'</span>,
+        pollVotes: [
+            { optionName: <span class="s">'Option A'</span>, optionVoteCount: <span class="s">'100'</span> },
+            { optionName: <span class="s">'Option B'</span>, optionVoteCount: <span class="s">'50'</span> }
+        ]
+    }
+});</pre>
+</section>
+
+<!-- payment -->
+<section id="payment">
+  <h2>Request Payment</h2>
+<pre><span class="kc">await</span> sock.<span class="nf">sendMessage</span>(jid, {
+    requestPaymentMessage: {
+        currency: <span class="s">'IDR'</span>,
+        amount: <span class="nt">10000000</span>,
+        from: m.sender,
+        background: {
+            id: <span class="s">'100'</span>,
+            placeholderArgb: <span class="kc2">0xFF00FFFF</span>,
+            textArgb: <span class="kc2">0xFFFFFFFF</span>
+        }
+    }
+});</pre>
+</section>
+
+<!-- api -->
+<section id="api">
+  <h2>API Reference</h2>
+  <table class="tbl">
+    <tr><td><code>makeWASocket(config)</code></td><td>Create a WhatsApp connection</td></tr>
+    <tr><td><code>sendMessage(jid, content, options)</code></td><td>Send any message type</td></tr>
+    <tr><td><code>useMultiFileAuthState(folder)</code></td><td>Persistent auth to disk</td></tr>
+    <tr><td><code>generateWAMessageFromContent(jid, content, opts)</code></td><td>Generate message without sending</td></tr>
+    <tr><td><code>prepareWAMessageMedia(msg, opts)</code></td><td>Upload and prepare media</td></tr>
+    <tr><td><code>makeInMemoryStore()</code></td><td>In-memory message store</td></tr>
+    <tr><td><code>makeCacheableSignalKeyStore(store, logger)</code></td><td>Cached signal key store wrapper</td></tr>
+    <tr><td><code>downloadContentFromMessage(msg, type)</code></td><td>Download media from message</td></tr>
+    <tr><td><code>getContentType(message)</code></td><td>Get message content type key</td></tr>
+    <tr><td><code>extractUrlFromText(text)</code></td><td>Extract URLs from text</td></tr>
+  </table>
+</section>
+
+<!-- events -->
+<section id="events">
+  <h2>Events</h2>
+  <table class="tbl">
+    <tr><td><code>connection.update</code></td><td>Connection state changes (open, close, connecting)</td></tr>
+    <tr><td><code>messages.upsert</code></td><td>New/updated messages</td></tr>
+    <tr><td><code>messages.update</code></td><td>Message status updates (read, delivered)</td></tr>
+    <tr><td><code>creds.update</code></td><td>Auth credentials changed</td></tr>
+    <tr><td><code>presence.update</code></td><td>User presence changes</td></tr>
+    <tr><td><code>groups.upsert</code></td><td>Joined groups</td></tr>
+    <tr><td><code>group-participants.update</code></td><td>Group participant changes</td></tr>
+    <tr><td><code>chats.upsert</code></td><td>New chats</td></tr>
+  </table>
+</section>
+
+<!-- buttons -->
+<section id="buttons">
+  <h2>Button Types</h2>
+  <div class="badges">
+    <span class="badge">cta_copy</span>
+    <span class="badge">cta_url</span>
+    <span class="badge">single_select</span>
+    <span class="badge">call_permission_request</span>
+    <span class="badge">review_and_pay</span>
+    <span class="badge">review_order</span>
+    <span class="badge">payment_info</span>
+    <span class="badge">payment_status</span>
+    <span class="badge">payment_method</span>
+  </div>
+  <p style="margin-top:.75rem;color:var(--text2);font-size:.88rem;">Usable inside <code>interactiveMessage.nativeFlowMessage.buttons[]</code>.</p>
+</section>
+
+</div><!-- /container -->
 
 <footer>
-    <p><a href="https://github.com/Manuel5906/baileys">Baileys</a> &mdash; MIT License</p>
+  <p><a href="https://github.com/Manuel5906/baileys">Baileys</a> &mdash; MIT License</p>
 </footer>
 
+</div><!-- /main -->
+
 <script>
-function switchTab(tabsId, tabId) {
-    const container = document.getElementById(tabsId).parentElement;
-    container.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelector(`#${tabsId} .tab[onclick*="${tabId}"]`).classList.add('active');
-    document.getElementById(tabId).classList.add('active');
+function sw(id,t){
+  const p=document.getElementById(id).parentElement;
+  p.querySelectorAll('.tab').forEach(e=>e.classList.remove('on'));
+  p.querySelectorAll('.tc').forEach(e=>e.classList.remove('on'));
+  document.querySelector(`#${id} .tab[onclick*="${t}"]`).classList.add('on');
+  document.getElementById(t).classList.add('on');
 }
-function copy(btn) {
-    const code = btn.previousElementSibling.textContent;
-    navigator.clipboard.writeText(code.trim());
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy', 1500);
+function copy(b){
+  const c=b.previousElementSibling.textContent;
+  navigator.clipboard.writeText(c.trim());
+  b.textContent='Copied!';
+  setTimeout(()=>b.textContent='Copy',1500);
+}
+function toggleNav(){
+  document.getElementById('nav').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('on');
+  document.getElementById('menuBtn').style.display='flex';
+}
+function closeNav(){
+  document.getElementById('nav').classList.remove('open');
+  document.getElementById('overlay').classList.remove('on');
 }
 </script>
 </body>
