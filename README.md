@@ -32,21 +32,11 @@ npm install github:Manuel5906/baileys
 ## Uso básico
 
 ```javascript
-const {
-    default: makeWASocket,
-    useMultiFileAuthState,
-    Browsers,
-    DisconnectReason,
-    makeInMemoryStore,
-    makeCacheableSignalKeyStore,
-    fetchLatestBaileysVersion,
-    proto,
-    getAggregateVotesInPollMessage,
-    generateWAMessageFromContent,
-    prepareWAMessageMedia,
-    delay,
-    areJidsSameUser
-} = require('baileys');
+// Opción 1 — con el paquete instalado como @darkcore/baileys
+const { default: makeWASocket } = require('@darkcore/baileys');
+
+// Opción 2 — con el paquete instalado como baileys (alias local)
+// const { default: makeWASocket } = require('baileys');
 ```
 
 ---
