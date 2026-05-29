@@ -1,33 +1,28 @@
-# <div align='center'>WhatsApp Web API</div>
+# <div align='center'>Baileys - WhatsApp Web API</div>
 
 <div align='center'>
 
-![WhatsApp API by Kurtu Coben](https://raw.githubusercontent.com/KurtuCoben/KurtuCoben-baileys/main/%40kurtucoben-baileys.jpg)
+![Baileys](https://avatars.githubusercontent.com/u/250554332?v=4)
 
 </div>
 
-Looking to build something cool with WhatsApp? Check out WhatsApp Baileys an open-source library that lets you create smooth automations and integrations directly with WhatsApp. Instead of relying on a browser, it uses websocket technology to keep things light and efficient.
+Looking to build something cool with WhatsApp? Check out Baileys - an open-source library that lets you create smooth automations and integrations directly with WhatsApp. Instead of relying on a browser, it uses websocket technology to keep things light and efficient.
 
-With Baileys, you can handle messages, manage chats and groups, create interactive messages with buttons, and build dynamic menus for a richer experience. It’s actively maintained, so updates regularly roll out to boost stability and performance. One big focus has been improving the pairing and login process making it more secure, reliable, and way less likely to drop off unexpectedly. You can even customize the pairing with your own code for extra control.
+With Baileys, you can handle messages, manage chats and groups, create interactive messages with buttons, and build dynamic menus for a richer experience. It's actively maintained, so updates regularly roll out to boost stability and performance.
 
-Whether you’re building a business bot, a customer service helper, or any kind of chat automation, Baileys is built to stay stable and packed with features. It’s designed to be modular and easy to plug into different systems, so you won’t get bogged down.
+Whether you're building a business bot, a customer service helper, or any kind of chat automation, Baileys is built to stay stable and packed with features.
 
 ## How to use?
 
-just type like this shit
+Install the package:
 ```bash
-npm install @kurtucoben/baileys
+npm install github:Manuel5906/baileys
 ```
-or
-```bash
-yarn add @kurtucoben/baileys
-```
-import your code to create a connection to the library
+
+Import and create a connection:
 ```javascript
 const {
     default: makeWASocket,
-    generateWAMessageFromContent,
-    prepareWAMessageMedia,
     useMultiFileAuthState,
     Browsers,
     DisconnectReason,
@@ -35,68 +30,21 @@ const {
     makeCacheableSignalKeyStore,
     fetchLatestBaileysVersion,
     proto,
-    PHONENUMBER_MCC,
     getAggregateVotesInPollMessage,
+    generateWAMessageFromContent,
+    prepareWAMessageMedia,
     delay,
     areJidsSameUser
-} = require('@kurtucoben/baileys');
+} = require('baileys');
 ```
-```javascript
-const {
-   default: WAConnection, makeWAMessage, 
-   makeCacheableSignalKeyStore, downloadContentFromMessage, 
-   emitGroupParticipantsUpdate, emitGroupUpdate, 
-   generateWAMessageContent, generateWAMessage, 
-   makeInMemoryStore, prepareWAMessageMedia, 
-   generateWAMessageFromContent, MediaType, 
-   areJidsSameUser, WAMessageStatus, 
-   downloadAndSaveMediaMessage, AuthenticationState, 
-   GroupMetadata, initInMemoryKeyStore, getContentType, 
-   MiscMessageGenerationOptionsuseSingleFileAuthState, BufferJSON, 
-   WAMessageProto, MessageOptions, WAFlag, WANode, WAMetric, 
-   ChatModification, MessageTypeProto, WALocationMessage, 
-   ReconnectMode, WAContextInfo, proto, WAGroupMetadata, ProxyAgent, 
-   waChatKey, MimetypeMap, MediaPathMap, WAContactMessage, 
-   WAContactsArrayMessage, WAGroupInviteMessage, 
-   WATextMessage, WAMessageContent, WAMessage, BaileysError, 
-   WA_MESSAGE_STATUS_TYPE, MediaConnInfo, URL_REGEX, WAUrlInfo, 
-   WA_DEFAULT_EPHEMERAL, WAMediaUpload, mentionedJid, 
-   Browser, MessageType, Presence, WA_MESSAGE_STUB_TYPES, 
-   Mimetype, relayWAMessage, Browsers, GroupSettingChange,
-   DisconnectReason, getStream, WAProto, isBaileys, PHONENUMBER_MCC, 
-   AnyMessageContent, useMultiFileAuthState, fetchLatestBaileysVersion, 
-   templateMessage, InteractiveMessage, Header } = require("@kurtucoben/baileys");
-```
----
-# Links
-
-#### Social Media
-- [Instagram](https://www.instagram.com/krtucbens)
-
-#### Follow For More Updates & Information
-- [WhatsApp Channel](https://whatsapp.com/channel/0029VajIECpGU3BIejJB1t18)
-
-<div align='center'>
-
-![Kurt Cobain Smile For You](https://raw.githubusercontent.com/KurtuCoben/KurtuCoben-baileys/main/kurtcobain.gif)
-
-</div>
 
 ### Why developers like it:
 
 - Pairing is more stable now - fewer fails and disconnections
 - Supports interactive messages, buttons, and dynamic menus
-- Supports interactive messages, action buttons, and dynamic menus
 - Manages sessions smoothly in the background
-- Works with WhatsApp’s latest multi-device feature
+- Works with WhatsApp's latest multi-device feature
 - Lightweight and modular design for easy integration and customization
-- Comes with clear docs and ready-to-use examples
-
----
-
-## Ready to start?
-
-Grab the library via npm or your package manager of choice, tweak the config, and dive right in. The example code is a great place to see how everything fits together. Use session storage and interactive features to build something solid that fits your project perfectly.
 
 ---
 
@@ -128,7 +76,7 @@ await sock.sendMessage(jid, {
             degreesLongitude: 0, 
             name: "rowrrrr" 
         }, 
-        joinLink: "https://call.whatsapp.com/video/krtucbens", 
+        joinLink: "https://example.com/event", 
         startTime: "1763019000", 
         endTime: "1763026200", 
         extraGuestsAllowed: false 
@@ -165,12 +113,12 @@ await sock.sendMessage(jid, {
     interactiveMessage: {
         header: "Hello World",
         title: "Hello World",
-        footer: "instagram: @krtucbens ",
+        footer: "Your footer here",
         buttons: [
             {
                 name: "cta_copy",
                 buttonParamsJson: JSON.stringify({
-                    display_text: "copy code",
+                    display_text: "Copy Code",
                     id: "123456789",              
                     copy_code: "ABC123XYZ"
                 })
@@ -188,26 +136,26 @@ await sock.sendMessage(jid, {
     interactiveMessage: {      
         header: "Hello World",
         title: "Hello World",      
-        footer: "instagram: @krtucbens",      
+        footer: "Your footer here",      
         image: { url: "https://example.com/image.jpg" },      
         nativeFlowMessage: {        
             messageParamsJson: JSON.stringify({          
                 limited_time_offer: {            
-                    text: "bahlil ajg",            
-                    url: "https://ig.me/m/krtucbens",            
-                    copy_code: "maskurtu",            
+                    text: "Limited offer",            
+                    url: "https://example.com/offer",            
+                    copy_code: "OFFER2024",            
                     expiration_time: Date.now() * 999          
                 },          
                 bottom_sheet: {            
                     in_thread_buttons_limit: 2,            
                     divider_indices: [1, 2, 3, 4, 5, 999],            
-                    list_title: "lorem ipsum dolor sit amet",            
-                    button_title: "lorem ipsum dolor sit amet"          
+                    list_title: "Select an option",            
+                    button_title: "View options"          
                 },          
                 tap_target_configuration: {            
-                    title: " X ",            
-                    description: "FawkNyggers",            
-                    canonical_url: "https://ig.me/m/krtucbens",            
+                    title: "Shop Now",            
+                    description: "Check our latest products",            
+                    canonical_url: "https://example.com/shop",            
                     domain: "shop.example.com",            
                     button_index: 0          
                 }        
@@ -228,16 +176,16 @@ await sock.sendMessage(jid, {
                 {            
                     name: "single_select",            
                     buttonParamsJson: JSON.stringify({              
-                        title: "Hello World",              
+                        title: "Options",              
                         sections: [                
                             {                  
-                                title: "title",                  
-                                highlight_label: "label",                  
+                                title: "Section 1",                  
+                                highlight_label: "Popular",                  
                                 rows: [                    
                                     {                      
-                                        title: "maskurtu",                      
-                                        description: "lop yu",                      
-                                        id: "row_2"                    
+                                        title: "Option 1",                      
+                                        description: "Description here",                      
+                                        id: "row_1"                    
                                     }                  
                                 ]                
                             }              
@@ -248,7 +196,7 @@ await sock.sendMessage(jid, {
                 {            
                     name: "cta_copy",            
                     buttonParamsJson: JSON.stringify({              
-                        display_text: "copy code",              
+                        display_text: "Copy Code",              
                         id: "123456789",              
                         copy_code: "ABC123XYZ"            
                     })          
@@ -259,21 +207,21 @@ await sock.sendMessage(jid, {
 }, { quoted: m });
 ```
 
-### Interactive Message with Thumbnail
-Send interactive messages with thumbnail image and copy button:
+### Interactive Message with Image
+Send interactive messages with image and copy button:
 
 ```javascript
 await sock.sendMessage(jid, {
     interactiveMessage: {
         header: "Hello World",
         title: "Hello World",
-        footer: "Instagram: @krtucbens",
+        footer: "Your footer here",
         image: { url: "https://example.com/image.jpg" },
         buttons: [
             {
                 name: "cta_copy",
                 buttonParamsJson: JSON.stringify({
-                    display_text: "copy code",
+                    display_text: "Copy Code",
                     id: "123456789",
                     copy_code: "ABC123XYZ"
                 })
@@ -289,21 +237,21 @@ Send product catalog messages with buttons and merchant information:
 ```javascript
 await sock.sendMessage(jid, {
     productMessage: {
-        title: "Produk Contoh",
-        description: "Ini adalah deskripsi produk",
+        title: "Sample Product",
+        description: "This is a product description",
         thumbnail: { url: "https://example.com/image.jpg" },
         productId: "PROD001",
         retailerId: "RETAIL001",
         url: "https://example.com/product",
-        body: "Detail produk",
-        footer: "Harga spesial",
+        body: "Product details",
+        footer: "Special price",
         priceAmount1000: 50000,
         currencyCode: "USD",
         buttons: [
             {
                 name: "cta_url",
                 buttonParamsJson: JSON.stringify({
-                    display_text: "Beli Sekarang",
+                    display_text: "Buy Now",
                     url: "https://example.com/buy"
                 })
             }
@@ -320,10 +268,10 @@ await sock.sendMessage(jid, {
     interactiveMessage: {
         header: "Hello World",
         title: "Hello World",
-        footer: "Instagram: @krtucbens",
+        footer: "Your footer here",
         document: fs.readFileSync("./package.json"),
         mimetype: "application/pdf",
-        fileName: "Epstein.pdf",
+        fileName: "document.pdf",
         jpegThumbnail: fs.readFileSync("./document.jpeg"),
         contextInfo: {
             mentionedJid: [jid],
@@ -331,12 +279,12 @@ await sock.sendMessage(jid, {
             isForwarded: false
         },
         externalAdReply: {
-            title: "Wabot",
-            body: "bot wacap",
+            title: "My Bot",
+            body: "Check this out",
             mediaType: 3,
             thumbnailUrl: "https://example.com/image.jpg",
-            mediaUrl: " X ",
-            sourceUrl: "https://ig.me/m/krtucbens",
+            mediaUrl: "https://example.com",
+            sourceUrl: "https://example.com",
             showAdAttribution: true,
             renderLargerThumbnail: false         
         },
@@ -344,9 +292,9 @@ await sock.sendMessage(jid, {
             {
                 name: "cta_url",
                 buttonParamsJson: JSON.stringify({
-                    display_text: "Instagram",
-                    url: "https://ig.me/m/krtucbens",
-                    merchant_url: "https://ig.me/m/krtucbens"
+                    display_text: "Visit Site",
+                    url: "https://example.com",
+                    merchant_url: "https://example.com"
                 })
             }
         ]
@@ -362,18 +310,18 @@ await sock.sendMessage(jid, {
     interactiveMessage: {
         header: "Hello World",
         title: "Hello World",
-        footer: "Instagram: @krtucbens",
+        footer: "Your footer here",
         document: fs.readFileSync("./package.json"),
         mimetype: "application/pdf",
-        fileName: "Epstein.pdf",
+        fileName: "document.pdf",
         jpegThumbnail: fs.readFileSync("./document.jpeg"),
         buttons: [
             {
                 name: "cta_url",
                 buttonParamsJson: JSON.stringify({
-                    display_text: "Instagram",
-                    url: "https://ig.me/m/krtucbens",
-                    merchant_url: "https://ig.me/m/krtucbens"
+                    display_text: "Visit Site",
+                    url: "https://example.com",
+                    merchant_url: "https://example.com"
                 })
             }
         ]
@@ -410,9 +358,9 @@ await sock.sendMessage(jid, {
 
 ---
 
-## Why should choose my baileys?
+## Why choose Baileys?
 
-This library delivers exceptional stability, a comprehensive feature set, and a continuously refined pairing process making it the ideal choice for building professional, secure WhatsApp automation. It also stays current with WhatsApp’s latest updates, so your projects remain compatible and future-proof.
+This library delivers exceptional stability, a comprehensive feature set, and a continuously refined pairing process making it the ideal choice for building professional, secure WhatsApp automation. It stays current with WhatsApp's latest updates, so your projects remain compatible and future-proof.
 
 ---
 
@@ -421,8 +369,7 @@ This library delivers exceptional stability, a comprehensive feature set, and a 
 - Stable, secure custom pairing with resolved authentication issues
 - Support for interactive messages, action buttons, and dynamic menus
 - Efficient automatic session management for long-term reliability
-- Full compatibility with WhatsApp’s multi-device feature
-- Compatible with the latest multi-device features from WhatsApp
+- Full compatibility with WhatsApp's multi-device feature
 - Easy to integrate and customize based on your needs
 - Perfect for developing bots, customer service automation, and other communication applications
 
