@@ -1,0 +1,21 @@
+module.exports = {
+    testEnvironment: 'node',
+    roots: ['<rootDir>/test'],
+    testMatch: ['**/*.test.js'],
+    moduleDirectories: ['node_modules', 'lib'],
+    moduleNameMapper: {
+        '^../../WAProto$': '<rootDir>/WAProto/index.js',
+        '^../Defaults$': '<rootDir>/lib/Defaults/index.js',
+        '^../Types$': '<rootDir>/lib/Types/index.js',
+        '^../Utils$': '<rootDir>/lib/Utils/index.js',
+        '^../Utils/(.*)$': '<rootDir>/lib/Utils/$1',
+        '^../WABinary$': '<rootDir>/lib/WABinary/index.js',
+        '^../WABinary/(.*)$': '<rootDir>/lib/WABinary/$1',
+    },
+    maxWorkers: 2,
+    cache: false,
+    verbose: true,
+    collectCoverage: false,
+    coverageDirectory: './coverage',
+    collectCoverageFrom: ['lib/**/*.js', '!lib/**/index.js', '!**/node_modules/**'],
+};
