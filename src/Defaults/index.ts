@@ -3,7 +3,7 @@ import { proto } from '../../WAProto';
 import { makeLibSignalRepository } from '../Signal/libsignal';
 import { Browsers } from '../Utils';
 import logger from '../Utils/logger';
-import { version as baileysVersion } from './kurtucoben-baileys-version.json';
+import { version as baileysVersion } from './darkcore-baileys-version.json';
 import phoneNumberMcc from './phonenumber-mcc.json';
 import type { MediaType, SocketConfig } from '../Types';
 

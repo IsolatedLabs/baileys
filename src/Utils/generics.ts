@@ -4,7 +4,7 @@ import { randomBytes, createHash } from 'crypto';
 import { platform, release } from 'os';
 import fetch from 'node-fetch';
 import { proto } from '../../WAProto';
-import { version as baileysVersion } from '../Defaults/kurtucoben-baileys-version.json';
+import { version as baileysVersion } from '../Defaults/darkcore-baileys-version.json';
 import { DisconnectReason, BaileysEventEmitter, BaileysEventMap, WACallUpdateType, WAVersion } from '../Types';
 import { getAllBinaryNodeChildren, jidDecode, BinaryNode } from '../WABinary';
 import type { Logger } from 'pino';

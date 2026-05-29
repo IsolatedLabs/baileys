@@ -4,3 +4,13 @@ coverage/
 *.log
 .DS_Store
 Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.idea/
+.vscode/
+*.sublime-*
+dist/
+build/
+tmp/
+temp/

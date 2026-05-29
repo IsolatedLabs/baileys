@@ -4,22 +4,33 @@
 
 ![Baileys](https://avatars.githubusercontent.com/u/250554332?v=4)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](package.json)
+[![GitHub release](https://img.shields.io/github/v/release/Manuel5906/baileys)](https://github.com/Manuel5906/baileys/releases)
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://manuel5906.github.io/baileys/)
+
 </div>
 
-Looking to build something cool with WhatsApp? Check out Baileys - an open-source library that lets you create smooth automations and integrations directly with WhatsApp. Instead of relying on a browser, it uses websocket technology to keep things light and efficient.
+Baileys es una librería open-source que te permite crear automatizaciones, bots e integraciones directamente con WhatsApp usando WebSocket, sin necesidad de un navegador.
 
-With Baileys, you can handle messages, manage chats and groups, create interactive messages with buttons, and build dynamic menus for a richer experience. It's actively maintained, so updates regularly roll out to boost stability and performance.
+Soporta mensajes interactivos, botones, menús dinámicos, administración de chats y grupos, y está actualizada con la función multi-dispositivo de WhatsApp.
 
-Whether you're building a business bot, a customer service helper, or any kind of chat automation, Baileys is built to stay stable and packed with features.
+---
 
-## How to use?
+## Documentación
 
-Install the package:
+📖 **Guía completa de uso**: [https://manuel5906.github.io/baileys/](https://manuel5906.github.io/baileys/)
+
+---
+
+## Instalación
+
 ```bash
 npm install github:Manuel5906/baileys
 ```
 
-Import and create a connection:
+## Uso básico
+
 ```javascript
 const {
     default: makeWASocket,
@@ -38,33 +49,21 @@ const {
 } = require('baileys');
 ```
 
-### Why developers like it:
-
-- Pairing is more stable now - fewer fails and disconnections
-- Supports interactive messages, buttons, and dynamic menus
-- Manages sessions smoothly in the background
-- Works with WhatsApp's latest multi-device feature
-- Lightweight and modular design for easy integration and customization
-
 ---
 
-## SendMessage Documentation
+## Tipos de mensaje
 
-### Album Message (Multiple Images)
-Send multiple images in a single album message:
-
+### Album Message (varias imágenes)
 ```javascript
 await sock.sendMessage(jid, { 
     albumMessage: [
-        { image: maskurtu, caption: "Foto pertama" },
-        { image: { url: "URL IMAGE" }, caption: "Foto kedua" }
+        { image: maskurtu, caption: "Foto primera" },
+        { image: { url: "https://example.com/img.jpg" }, caption: "Foto segunda" }
     ] 
 }, { quoted: m });
 ```
 
 ### Event Message
-Create and send WhatsApp event invitations:
-
 ```javascript
 await sock.sendMessage(jid, { 
     eventMessage: { 
@@ -85,52 +84,38 @@ await sock.sendMessage(jid, {
 ```
 
 ### Poll Result Message
-Display poll results with vote counts:
-
 ```javascript
 await sock.sendMessage(jid, { 
     pollResultMessage: { 
         name: "Hello World", 
         pollVotes: [
-            {
-                optionName: "TEST 1",
-                optionVoteCount: "112233"
-            },
-            {
-                optionName: "TEST 2",
-                optionVoteCount: "1"
-            }
+            { optionName: "TEST 1", optionVoteCount: "112233" },
+            { optionName: "TEST 2", optionVoteCount: "1" }
         ] 
     } 
 }, { quoted: m });
 ```
 
 ### Simple Interactive Message
-Send basic interactive messages with copy button functionality:
-
 ```javascript
 await sock.sendMessage(jid, {
     interactiveMessage: {
         header: "Hello World",
         title: "Hello World",
         footer: "Your footer here",
-        buttons: [
-            {
-                name: "cta_copy",
-                buttonParamsJson: JSON.stringify({
-                    display_text: "Copy Code",
-                    id: "123456789",              
-                    copy_code: "ABC123XYZ"
-                })
-            }
-        ]
+        buttons: [{
+            name: "cta_copy",
+            buttonParamsJson: JSON.stringify({
+                display_text: "Copy Code",
+                id: "123456789",
+                copy_code: "ABC123XYZ"
+            })
+        }]
     }
 }, { quoted: m });
 ```
 
 ### Interactive Message with Native Flow
-Send interactive messages with buttons, copy actions, and native flow features:
-
 ```javascript
 await sock.sendMessage(jid, {    
     interactiveMessage: {      
@@ -177,19 +162,15 @@ await sock.sendMessage(jid, {
                     name: "single_select",            
                     buttonParamsJson: JSON.stringify({              
                         title: "Options",              
-                        sections: [                
-                            {                  
-                                title: "Section 1",                  
-                                highlight_label: "Popular",                  
-                                rows: [                    
-                                    {                      
-                                        title: "Option 1",                      
-                                        description: "Description here",                      
-                                        id: "row_1"                    
-                                    }                  
-                                ]                
-                            }              
-                        ],              
+                        sections: [{                  
+                            title: "Section 1",                  
+                            highlight_label: "Popular",                  
+                            rows: [{                      
+                                title: "Option 1",                      
+                                description: "Description here",                      
+                                id: "row_1"                    
+                            }]                
+                        }],              
                         has_multiple_buttons: true            
                     })          
                 },          
@@ -208,8 +189,6 @@ await sock.sendMessage(jid, {
 ```
 
 ### Interactive Message with Image
-Send interactive messages with image and copy button:
-
 ```javascript
 await sock.sendMessage(jid, {
     interactiveMessage: {
@@ -217,23 +196,19 @@ await sock.sendMessage(jid, {
         title: "Hello World",
         footer: "Your footer here",
         image: { url: "https://example.com/image.jpg" },
-        buttons: [
-            {
-                name: "cta_copy",
-                buttonParamsJson: JSON.stringify({
-                    display_text: "Copy Code",
-                    id: "123456789",
-                    copy_code: "ABC123XYZ"
-                })
-            }
-        ]
+        buttons: [{
+            name: "cta_copy",
+            buttonParamsJson: JSON.stringify({
+                display_text: "Copy Code",
+                id: "123456789",
+                copy_code: "ABC123XYZ"
+            })
+        }]
     }
 }, { quoted: m });
 ```
 
 ### Product Message
-Send product catalog messages with buttons and merchant information:
-
 ```javascript
 await sock.sendMessage(jid, {
     productMessage: {
@@ -247,21 +222,19 @@ await sock.sendMessage(jid, {
         footer: "Special price",
         priceAmount1000: 50000,
         currencyCode: "USD",
-        buttons: [
-            {
-                name: "cta_url",
-                buttonParamsJson: JSON.stringify({
-                    display_text: "Buy Now",
-                    url: "https://example.com/buy"
-                })
-            }
-        ]
+        buttons: [{
+            name: "cta_url",
+            buttonParamsJson: JSON.stringify({
+                display_text: "Buy Now",
+                url: "https://example.com/buy"
+            })
+        }]
     }
 }, { quoted: m });
 ```
 
 ### Interactive Message with Document Buffer
-Send interactive messages with document from buffer (file system) - **Note: Documents only support buffer**:
+> **Nota**: Los documentos solo soportan buffer.
 
 ```javascript
 await sock.sendMessage(jid, {
@@ -288,23 +261,19 @@ await sock.sendMessage(jid, {
             showAdAttribution: true,
             renderLargerThumbnail: false         
         },
-        buttons: [
-            {
-                name: "cta_url",
-                buttonParamsJson: JSON.stringify({
-                    display_text: "Visit Site",
-                    url: "https://example.com",
-                    merchant_url: "https://example.com"
-                })
-            }
-        ]
+        buttons: [{
+            name: "cta_url",
+            buttonParamsJson: JSON.stringify({
+                display_text: "Visit Site",
+                url: "https://example.com",
+                merchant_url: "https://example.com"
+            })
+        }]
     }
 }, { quoted: m });
 ```
 
 ### Interactive Message with Document Buffer (Simple)
-Send interactive messages with document from buffer (file system) without contextInfo and externalAdReply - **Note: Documents only support buffer**:
-
 ```javascript
 await sock.sendMessage(jid, {
     interactiveMessage: {
@@ -315,23 +284,19 @@ await sock.sendMessage(jid, {
         mimetype: "application/pdf",
         fileName: "document.pdf",
         jpegThumbnail: fs.readFileSync("./document.jpeg"),
-        buttons: [
-            {
-                name: "cta_url",
-                buttonParamsJson: JSON.stringify({
-                    display_text: "Visit Site",
-                    url: "https://example.com",
-                    merchant_url: "https://example.com"
-                })
-            }
-        ]
+        buttons: [{
+            name: "cta_url",
+            buttonParamsJson: JSON.stringify({
+                display_text: "Visit Site",
+                url: "https://example.com",
+                merchant_url: "https://example.com"
+            })
+        }]
     }
 }, { quoted: m });
 ```
 
 ### Request Payment Message
-Send payment request messages with custom background and sticker:
-
 ```javascript
 let quotedType = m.quoted?.mtype || '';
 let quotedContent = JSON.stringify({ [quotedType]: m.quoted }, null, 2);
@@ -358,21 +323,16 @@ await sock.sendMessage(jid, {
 
 ---
 
-## Why choose Baileys?
+## Por qué Baileys?
 
-This library delivers exceptional stability, a comprehensive feature set, and a continuously refined pairing process making it the ideal choice for building professional, secure WhatsApp automation. It stays current with WhatsApp's latest updates, so your projects remain compatible and future-proof.
-
----
-
-### Technical Highlights
-
-- Stable, secure custom pairing with resolved authentication issues
-- Support for interactive messages, action buttons, and dynamic menus
-- Efficient automatic session management for long-term reliability
-- Full compatibility with WhatsApp's multi-device feature
-- Easy to integrate and customize based on your needs
-- Perfect for developing bots, customer service automation, and other communication applications
+- **Pareo estable** — menos fallos y desconexiones
+- **Mensajes interactivos** — botones, menús dinámicos y native flows
+- **Multi-dispositivo** — compatible con la última versión de WhatsApp
+- **Ligero y modular** — fácil de integrar y personalizar
+- **Mantenimiento activo** — actualizaciones regulares de estabilidad y rendimiento
 
 ---
 
-**Thanks for using our library! We're constantly improving it to keep up with the evolving needs of developers working on WhatsApp automation.**
+**Gracias por usar nuestra librería. Seguimos mejorándola para mantenerla al día con las necesidades de la comunidad.**
+
+📖 **Documentación completa**: [https://manuel5906.github.io/baileys/](https://manuel5906.github.io/baileys/)
