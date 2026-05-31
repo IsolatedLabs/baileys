@@ -12,7 +12,7 @@
         "multi-device",
         "websocket"
     ],
-    "homepage": "https://github.com/IsolatedLabs/baileys",
+    "homepage": "https://isolatedlabs.github.io/baileys",
     "repository": {
         "type": "git",
         "url": "https://github.com/IsolatedLabs/baileys"
