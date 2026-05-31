@@ -59,7 +59,7 @@
         "gradient-string": "^2.0.2",
         "libphonenumber-js": "^1.11.17",
         "lodash": "^4.17.21",
-        "libsignal": "github:NaufalYupra/libsignal-node",
+        "libsignal": "github:IsolatedLabs/libsignal-node",
         "music-metadata": "^7.14.0",
         "node-cache": "^5.1.2",
         "node-fetch": "^2.7.0",
