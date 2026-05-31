@@ -373,7 +373,7 @@ await sock.sendMessage(jid, {
 
 <div align='center'>
 
-📜 **[Privacy Policy](../PRIVACY.md)** — Any inappropriate use on behalf of Isolated Labs will be penalized.
+📜 **[Privacy Policy](../../PRIVACY.md)** — Any inappropriate use on behalf of Isolated Labs will be penalized.
 
 **© 2026 Isolated Labs. All rights reserved.**
 
