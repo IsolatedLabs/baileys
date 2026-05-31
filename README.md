@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](package.json)
 [![GitHub release](https://img.shields.io/github/v/release/Manuel5906/baileys)](https://github.com/Manuel5906/baileys/releases)
-[![Docs](https://img.shields.io/badge/docs-online-blue)](https://manuel5906.github.io/baileys/)
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://github.com/IsolatedLabs/baileys)
 
 </div>
 
@@ -19,7 +19,7 @@ Soporta mensajes interactivos, botones, menús dinámicos, administración de ch
 
 ## Documentación
 
-📖 **Guía completa de uso**: [https://manuel5906.github.io/baileys/](https://manuel5906.github.io/baileys/)
+📖 **Guía completa de uso**: [https://github.com/IsolatedLabs/baileys](https://github.com/IsolatedLabs/baileys)
 
 ---
 
@@ -325,4 +325,4 @@ await sock.sendMessage(jid, {
 
 **Gracias por usar nuestra librería. Seguimos mejorándola para mantenerla al día con las necesidades de la comunidad.**
 
-📖 **Documentación completa**: [https://manuel5906.github.io/baileys/](https://manuel5906.github.io/baileys/)
+📖 **Documentación completa**: [https://github.com/IsolatedLabs/baileys](https://github.com/IsolatedLabs/baileys)

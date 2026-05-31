@@ -12,13 +12,14 @@
         "multi-device",
         "websocket"
     ],
-    "homepage": "https://manuel5906.github.io/baileys",
+    "homepage": "https://github.com/IsolatedLabs/baileys",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Manuel5906/baileys"
+        "url": "https://github.com/IsolatedLabs/baileys"
     },
     "license": "MIT",
-    "author": "Manuel5906",
+    "author": "IsolatedLabs",
+    "funding": "https://github.com/IsolatedLabs",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "files": [
