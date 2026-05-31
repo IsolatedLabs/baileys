@@ -6,8 +6,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](package.json)
-[![GitHub release](https://img.shields.io/github/v/release/Manuel5906/baileys)](https://github.com/Manuel5906/baileys/releases)
-[![Docs](https://img.shields.io/badge/docs-online-blue)](https://github.com/IsolatedLabs/baileys)
+[![GitHub release](https://img.shields.io/github/v/release/IsolatedLabs/baileys)](https://github.com/IsolatedLabs/baileys/releases)
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://isolatedlabs.github.io/baileys)
 
 </div>
 
@@ -327,4 +327,37 @@ await sock.sendMessage(jid, {
 
 **Nuestra organización le quiere decir las grandes gracias a nuestro miembro "Manuel5906" por entregar su proyecto hacia el IsolatedLabs, Todos los creditos del codigo son de su propiedad y de IsolatedLabs**
 
-📖 **Documentación completa**: [https://github.com/IsolatedLabs/baileys](https://github.com/IsolatedLabs/baileys)
+📖 **Documentación completa**: [https://isolatedlabs.github.io/baileys](https://isolatedlabs.github.io/baileys)
+
+---
+
+## Organización
+
+<div align='center'>
+
+| | |
+|---|---|
+| **Organización** | [Isolated Labs](https://github.com/IsolatedLabs) |
+| **Web** | [adoolab.xyz](http://adoolab.xyz) |
+| **Canal** | [WhatsApp Channel](https://whatsapp.com/channel/0029Val9ZCp1SWszvD7jUx1B) |
+| **Email** | isolatedlabs.cn@gmail.com |
+
+</div>
+
+### Colaboradores
+
+| Usuario | Rol |
+|---------|-----|
+| [Manuel5906](https://github.com/Manuel5906) | Admin / Developer |
+| [thisAdo](https://github.com/thisAdo) | Admin / Developer |
+| [Andresv27728](https://github.com/Andresv27728) | Developer |
+| [SoyMaycol](https://github.com/SoyMaycol) | Developer |
+| [picolasYT](https://github.com/picolasYT) | Developer |
+
+---
+
+<div align='center'>
+
+**© 2026 Isolated Labs. All rights reserved.**
+
+</div>
