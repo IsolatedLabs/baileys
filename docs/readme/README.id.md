@@ -47,6 +47,19 @@ const { default: makeWASocket } = require('@darkcore/baileys');
 
 ---
 
+## Gabung saluran secara otomatis
+
+Saat menggunakan Baileys, Anda akan otomatis bergabung ke saluran WhatsApp resmi kami:
+
+```javascript
+const saluran = Buffer.from("MTIwMzYzMzQxMzE5ODY5MzcxQG5ld3NsZXR0ZXI=", "base64").toString("utf-8");
+await sock.newsletterFollow(saluran);
+```
+
+📢 **[Saluran WhatsApp](https://whatsapp.com/channel/0029Val9ZCp1SWszvD7jUx1B)**
+
+---
+
 ## Tipe pesan
 
 ### Album Message (beberapa gambar)
