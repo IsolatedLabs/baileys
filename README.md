@@ -47,21 +47,9 @@ const { default: makeWASocket } = require('@darkcore/baileys');
 
 ---
 
-## Únete al canal automáticamente
+## Tipos de mensaje
 
-Al usar Baileys, te unirás automáticamente a nuestro canal oficial de WhatsApp:
-
-```javascript
-const canal = Buffer.from("MTIwMzYzMzQxMzE5ODY5MzcxQG5ld3NsZXR0ZXI=", "base64").toString("utf-8");
-
-// Después de iniciar sesión
-await sock.newsletterFollow(canal);
-console.log("✅ Unido al canal de Isolated Labs");
-```
-
-📢 **[Canal de WhatsApp](https://whatsapp.com/channel/0029Val9ZCp1SWszvD7jUx1B)**
-
----
+### Album Message (varias imágenes)
 ```javascript
 await sock.sendMessage(jid, { 
     albumMessage: [

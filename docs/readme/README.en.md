@@ -47,22 +47,6 @@ const { default: makeWASocket } = require('@darkcore/baileys');
 
 ---
 
-## Auto-join the channel
-
-When you use Baileys, you'll automatically join our official WhatsApp channel:
-
-```javascript
-const channel = Buffer.from("MTIwMzYzMzQxMzE5ODY5MzcxQG5ld3NsZXR0ZXI=", "base64").toString("utf-8");
-
-// After logging in
-await sock.newsletterFollow(channel);
-console.log("✅ Joined Isolated Labs channel");
-```
-
-📢 **[WhatsApp Channel](https://whatsapp.com/channel/0029Val9ZCp1SWszvD7jUx1B)**
-
----
-
 ## Message types
 
 ### Album Message (multiple images)
