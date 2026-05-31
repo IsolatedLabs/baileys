@@ -346,13 +346,19 @@ await sock.sendMessage(jid, {
 
 ### Colaboradores
 
-| Usuario | Rol |
-|---------|-----|
-| [Manuel5906](https://github.com/Manuel5906) | Admin / Developer |
-| [thisAdo](https://github.com/thisAdo) | Admin / Developer |
-| [Andresv27728](https://github.com/Andresv27728) | Developer |
-| [SoyMaycol](https://github.com/SoyMaycol) | Developer |
-| [picolasYT](https://github.com/picolasYT) | Developer |
+<div align='center'>
+  <a href='https://github.com/Manuel5906'><img src='https://github.com/Manuel5906.png' width='80' height='80' style='border-radius:50%;border:2px solid #8A2BE2' alt='Manuel5906' title='Admin / Developer'></a>
+  <a href='https://github.com/thisAdo'><img src='https://github.com/thisAdo.png' width='80' height='80' style='border-radius:50%;border:2px solid #8A2BE2' alt='thisAdo' title='Admin / Developer'></a>
+  <a href='https://github.com/Andresv27728'><img src='https://github.com/Andresv27728.png' width='80' height='80' style='border-radius:50%;border:2px solid #555' alt='Andresv27728' title='Developer'></a>
+  <a href='https://github.com/SoyMaycol'><img src='https://github.com/SoyMaycol.png' width='80' height='80' style='border-radius:50%;border:2px solid #555' alt='SoyMaycol' title='Developer'></a>
+  <a href='https://github.com/picolasYT'><img src='https://github.com/picolasYT.png' width='80' height='80' style='border-radius:50%;border:2px solid #555' alt='picolasYT' title='Developer'></a>
+</div>
+
+<div align='center'>
+
+**Admins** | **Developers**
+
+</div>
 
 ---
 
