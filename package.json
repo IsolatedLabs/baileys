@@ -1,5 +1,5 @@
 {
-    "name": "@darkcore/baileys",
+    "name": "@isolatedlabs/baileys",
     "version": "0.2.8",
     "description": "WhatsApp Web API open-source para crear automatizaciones, bots e integraciones con WebSocket",
     "keywords": [
