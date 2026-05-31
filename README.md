@@ -39,10 +39,10 @@ npm install @IsolatedLabs/baileys
 
 ```javascript
 // Opción 1 — con el paquete instalado como @darkcore/baileys
-const { default: makeWASocket } = require('@darkcore/baileys');
+const { default: makeWASocket } = require('@IsolatedLabs/baileys');
 
 // Opción 2 — con el paquete instalado como baileys (alias local)
-// const { default: makeWASocket } = require('baileys');
+// const { default: makeWASocket } = require('@IsolatedLabs/baileys');
 ```
 
 ---
