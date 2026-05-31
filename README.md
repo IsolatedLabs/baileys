@@ -344,20 +344,23 @@ await sock.sendMessage(jid, {
 
 </div>
 
+### Creador Principal
+
+<div align='center'>
+  <a href='https://github.com/Manuel5906'><img src='https://github.com/Manuel5906.png' width='120' height='120' style='border-radius:50%;border:3px solid gold' alt='Manuel5906'></a>
+  <br>
+  <strong>Manuel5906</strong>
+  <br>
+  <em>Fundador & Desarrollador Principal</em>
+</div>
+
 ### Colaboradores
 
 <div align='center'>
-  <a href='https://github.com/Manuel5906'><img src='https://github.com/Manuel5906.png' width='80' height='80' style='border-radius:50%;border:2px solid #8A2BE2' alt='Manuel5906' title='Admin / Developer'></a>
-  <a href='https://github.com/thisAdo'><img src='https://github.com/thisAdo.png' width='80' height='80' style='border-radius:50%;border:2px solid #8A2BE2' alt='thisAdo' title='Admin / Developer'></a>
-  <a href='https://github.com/Andresv27728'><img src='https://github.com/Andresv27728.png' width='80' height='80' style='border-radius:50%;border:2px solid #555' alt='Andresv27728' title='Developer'></a>
-  <a href='https://github.com/SoyMaycol'><img src='https://github.com/SoyMaycol.png' width='80' height='80' style='border-radius:50%;border:2px solid #555' alt='SoyMaycol' title='Developer'></a>
-  <a href='https://github.com/picolasYT'><img src='https://github.com/picolasYT.png' width='80' height='80' style='border-radius:50%;border:2px solid #555' alt='picolasYT' title='Developer'></a>
-</div>
-
-<div align='center'>
-
-**Admins** | **Developers**
-
+  <a href='https://github.com/thisAdo'><img src='https://github.com/thisAdo.png' width='70' height='70' style='border-radius:50%;border:2px solid #8A2BE2' alt='thisAdo' title='Admin / Developer'></a>
+  <a href='https://github.com/Andresv27728'><img src='https://github.com/Andresv27728.png' width='70' height='70' style='border-radius:50%;border:2px solid #555' alt='Andresv27728' title='Developer'></a>
+  <a href='https://github.com/SoyMaycol'><img src='https://github.com/SoyMaycol.png' width='70' height='70' style='border-radius:50%;border:2px solid #555' alt='SoyMaycol' title='Developer'></a>
+  <a href='https://github.com/picolasYT'><img src='https://github.com/picolasYT.png' width='70' height='70' style='border-radius:50%;border:2px solid #555' alt='picolasYT' title='Developer'></a>
 </div>
 
 ---
