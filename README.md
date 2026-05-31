@@ -26,7 +26,7 @@ Soporta mensajes interactivos, botones, menús dinámicos, administración de ch
 ## Instalación
 
 ```bash
-npm install github:Manuel5906/baileys
+npm install @IsolatedLabs/baileys
 ```
 
 ## Uso básico
@@ -324,5 +324,7 @@ await sock.sendMessage(jid, {
 ---
 
 **Gracias por usar nuestra librería. Seguimos mejorándola para mantenerla al día con las necesidades de la comunidad.**
+
+**Nuestra organización le quiere decir las grandes gracias a nuestro miembro "Manuel5906" por entregar su proyecto hacia el IsolatedLabs, Todos los creditos del codigo son de su propiedad y de IsolatedLabs**
 
 📖 **Documentación completa**: [https://github.com/IsolatedLabs/baileys](https://github.com/IsolatedLabs/baileys)
