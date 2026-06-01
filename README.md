@@ -313,6 +313,25 @@ await sock.sendMessage(jid, {
 }, { quoted: m });
 ```
 
+### AI Response Utilities
+
+```javascript
+const { parseCodeBlocks, sendAIResponse } = require('@IsolatedLabs/baileys');
+
+// Parse a response text extracting code blocks
+const parts = parseCodeBlocks(respuestaAI);
+// parts = [
+//   { type: 'text', content: 'texto normal...' },
+//   { type: 'code', lang: 'javascript', content: 'console.log("hola")' },
+//   { type: 'text', content: '...más texto' }
+// ]
+
+// Or send directly to WhatsApp
+await sendAIResponse(conn, m, data);
+// data puede tener: data.output[0].content, data.output, data.response,
+// data.message, data.result, data.answer, data.text, data.data.output
+```
+
 ---
 
 ## Por qué Baileys?
